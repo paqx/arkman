@@ -1,0 +1,226 @@
+import re
+from collections import UserDict, defaultdict
+from typing import Union, Self
+from os import PathLike
+
+ArkConfigItem = Union[str, int, float, bool]
+ArkConfigItems = Union[ArkConfigItem, list[ArkConfigItem]]
+
+
+class ArkConfigSection(UserDict[str, ArkConfigItems]):
+    """
+    Represents a section of an Ark Survival Evolved configuration file.
+    This class can handle keys that appear multiple times in a section.
+    Each key's value is parsed and stored as one of the following types:
+    str, int, float, or bool.
+    """
+
+    _BOOL_PATTERN = r"""^(?P<bool>true|false)$"""
+    _INT_PATTERN = r"""^(?P<int>[+-]?\d+)$"""
+    _FLOAT_PATTERN = r"""^(?P<float>[+-]?\d*\.\d+)$"""
+
+    BOOL_RE = re.compile(_BOOL_PATTERN, re.IGNORECASE)
+    INT_RE = re.compile(_INT_PATTERN)
+    FLOAT_RE = re.compile(_FLOAT_PATTERN)
+
+    ALLOWED_TYPES = (str, int, float, bool)
+
+    def __setitem__(self, key: str, item):
+        """
+        Set an option in the section and ensure it is of an allowed type or 
+        list of allowed types.
+        """
+        is_allowed_type = isinstance(item, self.ALLOWED_TYPES)
+        is_allowed_list = (
+            isinstance(item, list) and
+            all(isinstance(x, self.ALLOWED_TYPES) for x in item)
+        )
+
+        if not (is_allowed_type or is_allowed_list):
+            raise TypeError(
+                f"Value must be str, int, float, bool, or a list of "
+                f"these types, not {type(item).__name__} for key {key}"
+            )
+
+        if isinstance(item, str):
+            item = self.parse(item)
+
+        if key in self.data:
+            existing = self.data[key]
+
+            if isinstance(existing, list):
+                existing.append(item)
+            else:
+                self.data[key] = [existing, item]
+        else:
+            self.data[key] = item
+
+    def __repr__(self):
+        """Return a string representation of the section."""
+        return f"ArkConfigSection({self.data!r})"
+
+    def parse(self, value: str) -> ArkConfigItem:
+        """
+        Parse a string value to its respective type (bool, int, float) or 
+        fallbacks to str.
+        """
+        value = value.strip()
+
+        bool_match = self.BOOL_RE.match(value)
+        if bool_match:
+            return bool_match.group('bool').lower() == 'true'
+
+        float_match = self.FLOAT_RE.match(value)
+        if float_match:
+            return float(float_match.group('float'))
+
+        int_match = self.INT_RE.match(value)
+        if int_match:
+            return int(int_match.group('int'))
+
+        return value
+
+    def dump(self) -> str:
+        """Return the section's key-value pairs as INI-formatted string."""
+        lines = []
+
+        for key, item in self.data.items():
+            if isinstance(item, list):
+                for value in item:
+                    lines.append(f'{key}={value}')
+            else:
+                lines.append(f'{key}={item}')
+
+        return '\n'.join(lines)
+
+
+class ArkConfig:
+    """
+    A custom INI-style parser for Ark Survival Evolved configuration files.
+    This parser can handle sections with duplicate keys.
+    """
+
+    _SECTION_PATTERN = r"""\[(?P<section_name>.+)\]"""
+    _OPTION_PATTERN = r"""(?P<option>.*?)\s*(?P<vi>{delim})\s*(?P<value>.*)$"""
+
+    SECTION_RE = re.compile(_SECTION_PATTERN)
+    OPTION_RE = re.compile(_OPTION_PATTERN.format(delim="="))
+
+    def __init__(self):
+        """Initialize a new empty configuration."""
+        self._config: defaultdict[str, ArkConfigSection] = defaultdict(
+            ArkConfigSection)
+
+    def __repr__(self):
+        """Return a string representation."""
+        config = ', '.join(
+            f"{section_name!r}: {section!r}" for section_name, section in self._config.items()
+        )
+        return f"ArkConfig({{{config}}})"
+
+    def __getitem__(self, section_name: str) -> ArkConfigSection:
+        """Get a section by name."""
+        return self._config[section_name]
+
+    def __setitem__(self, section_name: str, value):
+        """
+        Set a configuration section by name. Accepts either an ArkConfigSection 
+        or dict.
+        """
+        if isinstance(value, ArkConfigSection):
+            self._config[section_name] = value
+        elif isinstance(value, dict):
+            self._config[section_name] = ArkConfigSection(value)
+        else:
+            raise ValueError(
+                "Value must be an ArkConfigSection or a dict of options."
+            )
+
+    def read(self, filepath: str | PathLike) -> None:
+        """
+        Read and parse an Ark config INI file.
+        """
+        with open(filepath, 'r', encoding='utf-16') as f:
+            lines = f.readlines()
+
+        section_name = None
+        self._config.clear()
+
+        for line in lines:
+            line = line.strip()
+
+            if not line or line.startswith(';'):
+                continue
+
+            section_match = self.SECTION_RE.match(line)
+            if section_match:
+                section_name = section_match.group('section_name')
+                continue
+
+            if section_name is None:
+                raise ValueError(f'No section for option: {line}')
+
+            option_match = self.OPTION_RE.match(line)
+            if option_match:
+                option = option_match.group('option').strip()
+
+                if option_match.group('value'):
+                    value = option_match.group('value').strip()
+                else:
+                    value = None
+
+                self._config[section_name][option] = value
+
+    def write(self, filepath: str | PathLike) -> None:
+        """
+        Dump and write the current configuration to an INI file.
+        """
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(self.dump())
+
+    def merge(self, other: Self) -> Self:
+        """
+        Merge the current configuration with the other. The other takes 
+        precedence for duplicates.
+        """
+        merged = ArkConfig()
+        section_names = {
+            k for k in self.section_names + other.section_names}
+
+        for section_name in section_names:
+            merged[section_name] = self[section_name] | other[section_name]
+
+        return merged
+
+    def dump(self) -> str:
+        """Return the entire configuration as an INI string."""
+        lines = []
+
+        for section_name, section in self._config.items():
+            lines.append(f'[{section_name}]')
+            lines.append(section.dump())
+            lines.append('')
+
+        if lines and lines[-1] == '':
+            lines = lines[:-1]
+
+        return '\n'.join(lines)
+
+    @property
+    def section_names(self) -> list[str]:
+        """Return a list of section names in the configuration."""
+        return list(self._config.keys())
+
+    def to_dict(self) -> dict[str, dict[str, ArkConfigItems]]:
+        """Return the configuration as a nested dictionary."""
+        return {k: dict(v) for k, v in self._config.items()}
+
+    @classmethod
+    def from_dict(cls, data: dict[str, dict[str, ArkConfigItems]]) -> Self:
+        """
+        Create an ArkConfig instance from a nested dictionary structure.
+        """
+        config = cls()
+        for section_name, section_dict in data.items():
+            config[section_name] = section_dict
+        return config
