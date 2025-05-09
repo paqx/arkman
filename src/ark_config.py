@@ -1,13 +1,15 @@
 import re
 from collections import UserDict, defaultdict
-from typing import Union, Self
+from typing import Union, Self, Literal, Optional
 from os import PathLike
+
+import yaml
 
 ArkConfigItem = Union[str, int, float, bool]
 ArkConfigItems = Union[ArkConfigItem, list[ArkConfigItem]]
 
 
-class ArkConfigSection(UserDict[str, ArkConfigItems]):
+class ArkConfigSection(UserDict[str, Optional[ArkConfigItems]]):
     """
     Represents a section of an Ark Survival Evolved configuration file.
     This class can handle keys that appear multiple times in a section.
@@ -106,8 +108,9 @@ class ArkConfig:
     SECTION_RE = re.compile(_SECTION_PATTERN)
     OPTION_RE = re.compile(_OPTION_PATTERN.format(delim="="))
 
-    def __init__(self):
+    def __init__(self, encoding: Optional[Literal['utf-8', 'utf-16']] = None):
         """Initialize a new empty configuration."""
+        self.encoding = encoding
         self._config: defaultdict[str, ArkConfigSection] = defaultdict(
             ArkConfigSection)
 
@@ -116,7 +119,7 @@ class ArkConfig:
         config = ', '.join(
             f"{section_name!r}: {section!r}" for section_name, section in self._config.items()
         )
-        return f"ArkConfig({{{config}}})"
+        return f"ArkConfig(encoding={self.encoding!r}, config={{{config}}})"
 
     def __getitem__(self, section_name: str) -> ArkConfigSection:
         """Get a section by name."""
@@ -140,8 +143,14 @@ class ArkConfig:
         """
         Read and parse an Ark config INI file.
         """
-        with open(filepath, 'r', encoding='utf-16') as f:
-            lines = f.readlines()
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+                self.encoding = 'utf-8'
+        except UnicodeError:
+            with open(filepath, 'r', encoding='utf-16') as f:
+                lines = f.readlines()
+                self.encoding = 'utf-16'
 
         section_name = None
         self._config.clear()
@@ -167,15 +176,15 @@ class ArkConfig:
                 if option_match.group('value'):
                     value = option_match.group('value').strip()
                 else:
-                    value = None
+                    value = ''
 
                 self._config[section_name][option] = value
 
-    def write(self, filepath: str | PathLike) -> None:
+    def write(self, filepath: str | PathLike):
         """
-        Dump and write the current configuration to an INI file.
+        Dump and write the configuration to an INI file.
         """
-        with open(filepath, 'w', encoding='utf-8') as f:
+        with open(filepath, 'w', encoding=self.encoding) as f:
             f.write(self.dump())
 
     def merge(self, other: Self) -> Self:
@@ -193,7 +202,7 @@ class ArkConfig:
         return merged
 
     def dump(self) -> str:
-        """Return the entire configuration as an INI string."""
+        """Return the configuration as an INI string."""
         lines = []
 
         for section_name, section in self._config.items():
@@ -206,14 +215,21 @@ class ArkConfig:
 
         return '\n'.join(lines)
 
-    @property
-    def section_names(self) -> list[str]:
-        """Return a list of section names in the configuration."""
-        return list(self._config.keys())
-
     def to_dict(self) -> dict[str, dict[str, ArkConfigItems]]:
         """Return the configuration as a nested dictionary."""
         return {k: dict(v) for k, v in self._config.items()}
+
+    def to_yaml(self) -> str:
+        """Return the configuration as a YAML string."""
+        return yaml.safe_dump(
+            self.to_dict(), allow_unicode=True, sort_keys=False)
+
+    def to_yaml_file(self, filepath: str | PathLike):
+        """
+        Convert the configuration to a YAML string and write it to a file.
+        """
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(self.to_yaml())
 
     @classmethod
     def from_dict(cls, data: dict[str, dict[str, ArkConfigItems]]) -> Self:
@@ -221,6 +237,35 @@ class ArkConfig:
         Create an ArkConfig instance from a nested dictionary structure.
         """
         config = cls()
+
         for section_name, section_dict in data.items():
             config[section_name] = section_dict
+
         return config
+
+    @classmethod
+    def from_yaml(cls, yaml_text: str) -> Self:
+        """
+        Create an ArkConfig instance from a YAML string.
+        """
+        data = yaml.safe_load(yaml_text)
+
+        if not isinstance(data, dict):
+            raise ValueError("YAML root must be a mapping")
+
+        return cls.from_dict(data)
+
+    @classmethod
+    def from_yaml_file(cls, filepath: str | PathLike) -> Self:
+        """
+        Create an ArkConfig instance from a YAML file.
+        """
+        with open(filepath, 'r', encoding='utf-8') as f:
+            yaml_text = f.read()
+
+        return cls.from_yaml(yaml_text)
+
+    @property
+    def section_names(self) -> list[str]:
+        """Return a list of section names in the configuration."""
+        return list(self._config.keys())
