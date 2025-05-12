@@ -1,15 +1,15 @@
 import re
 from collections import UserDict, defaultdict
-from typing import Union, Self, Literal, Optional
-from os import PathLike
+from typing import Union, Self, Literal, Optional, Mapping
+from os import PathLike, environ
 
 import yaml
 
-ArkConfigItem = Union[str, int, float, bool]
-ArkConfigItems = Union[ArkConfigItem, list[ArkConfigItem]]
+ArkConfigPrimitiveValue = Union[str, int, float, bool]
+ArkConfigValue = Union[ArkConfigPrimitiveValue, list[ArkConfigPrimitiveValue]]
 
 
-class ArkConfigSection(UserDict[str, Optional[ArkConfigItems]]):
+class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
     """
     Represents a section of an Ark Survival Evolved configuration file.
     This class can handle keys that appear multiple times in a section.
@@ -61,7 +61,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigItems]]):
         """Return a string representation of the section."""
         return f"ArkConfigSection({self.data!r})"
 
-    def parse(self, value: str) -> ArkConfigItem:
+    def parse(self, value: str) -> ArkConfigValue:
         """
         Parse a string value to its respective type (bool, int, float) or 
         fallbacks to str.
@@ -93,7 +93,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigItems]]):
             else:
                 lines.append(f'{key}={item}')
 
-        return '\n'.join(lines)
+        return '\r\n'.join(lines)
 
 
 class ArkConfig:
@@ -104,9 +104,11 @@ class ArkConfig:
 
     _SECTION_PATTERN = r"""\[(?P<section_name>.+)\]"""
     _OPTION_PATTERN = r"""(?P<option>.*?)\s*(?P<vi>{delim})\s*(?P<value>.*)$"""
+    _ENV_PATTERN = r"""\$\{(?P<env>[A-Za-z_][A-Za-z0-9_]*)\}"""
 
     SECTION_RE = re.compile(_SECTION_PATTERN)
     OPTION_RE = re.compile(_OPTION_PATTERN.format(delim="="))
+    ENV_RE = re.compile(_ENV_PATTERN)
 
     def __init__(self, encoding: Optional[Literal['utf-8', 'utf-16']] = None):
         """Initialize a new empty configuration."""
@@ -139,7 +141,34 @@ class ArkConfig:
                 "Value must be an ArkConfigSection or a dict of options."
             )
 
-    def read(self, filepath: str | PathLike) -> None:
+    def _expand_env_vars(self):
+        for section_name, section in self._config.items():
+            for key, value in section.items():
+                if not isinstance(value, str):
+                    continue
+
+                value = value.strip()
+                env_match = self.ENV_RE.match(value)
+
+                if not env_match:
+                    continue
+
+                env_key = env_match.group('env')
+                env_value = environ[env_key]
+                self._config[section_name].data[key] = env_value
+
+    def sort(self):
+        """
+        Sort each section by keys.
+        """
+        for section_name, section in self._config.items():
+            self._config[section_name] = ArkConfigSection(
+                sorted(section.items()))
+
+        sorted_config = sorted(self._config.items())
+        self._config = defaultdict(self._config.default_factory, sorted_config)
+
+    def read(self, filepath: str | PathLike):
         """
         Read and parse an Ark config INI file.
         """
@@ -210,12 +239,9 @@ class ArkConfig:
             lines.append(section.dump())
             lines.append('')
 
-        if lines and lines[-1] == '':
-            lines = lines[:-1]
+        return '\r\n'.join(lines)
 
-        return '\n'.join(lines)
-
-    def to_dict(self) -> dict[str, dict[str, ArkConfigItems]]:
+    def to_dict(self) -> dict[str, dict[str, ArkConfigValue]]:
         """Return the configuration as a nested dictionary."""
         return {k: dict(v) for k, v in self._config.items()}
 
@@ -232,7 +258,7 @@ class ArkConfig:
             f.write(self.to_yaml())
 
     @classmethod
-    def from_dict(cls, data: dict[str, dict[str, ArkConfigItems]]) -> Self:
+    def from_dict(cls, data: dict[str, dict[str, ArkConfigValue]]) -> Self:
         """
         Create an ArkConfig instance from a nested dictionary structure.
         """
@@ -253,7 +279,9 @@ class ArkConfig:
         if not isinstance(data, dict):
             raise ValueError("YAML root must be a mapping")
 
-        return cls.from_dict(data)
+        instance = cls.from_dict(data)
+        instance._expand_env_vars()
+        return instance
 
     @classmethod
     def from_yaml_file(cls, filepath: str | PathLike) -> Self:

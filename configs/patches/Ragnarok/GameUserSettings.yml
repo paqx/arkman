@@ -1,0 +1,13 @@
+ServerSettings:
+  DayTimeSpeedScale: 0.5
+  MaxPersonalTamedDinos: 300
+  RCONPort: 29140
+  ServerAdminPassword: ${RAGNAROK_SERVER_ADMIN_PASS}
+/Script/ShooterGame.ShooterGameUserSettings:
+  bLowQualityAnimations: true
+SessionSettings:
+  SessionName: ARK Shelter x5 PvE [RU] Ragnarok
+/Game/PrimalEarth/CoreBlueprints/TestGameMode.TestGameMode_C:
+  ConfigOverrideSupplyCrateItems:
+    '(SupplyCrateClassString="SupplyCrate_IceCaveTier3",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+    для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,MaxQuality=1.200000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.900000)),SetWeight=0.023000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
