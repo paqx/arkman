@@ -1,4 +1,4 @@
-configs/merged/*
+configs/ini/*
 .venv/
 .env
 *.pyc

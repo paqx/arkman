@@ -249,7 +249,7 @@ class ArkConfig:
         ArkConfig
             A new ArkConfig instance containing the merged configuration.
         """
-        merged = ArkConfig()
+        merged = ArkConfig(encoding=self.encoding)
         section_names = {
             k for k in self.section_names + other.section_names}
 
