@@ -67,7 +67,7 @@
 - (ItemClassString="PrimalItemResource_Crystal_Primal_C",Quantity=(MaxItemQuantity=50,bIgnoreMultiplier=true))
 - (ItemClassString="PrimalItemResource_Electronics_C",Quantity=(MaxItemQuantity=1000,bIgnoreMultiplier=true))
 - (ItemClassString="PrimalItemResource_Element_C",Quantity=(MaxItemQuantity=1000,bIgnoreMultiplier=true))
-- (ItemClassString="PrimalItemResource_ElementShard_C",Quantity=(MaxItemQuantity=1000,bIgnoreMultiplier=true))
+- (ItemClassString="PrimalItemResource_ElementShard_C",Quantity=(MaxItemQuantity=10000,bIgnoreMultiplier=true))
 - (ItemClassString="PrimalItemResource_Fibers_C",Quantity=(MaxItemQuantity=3000,bIgnoreMultiplier=true))
 - (ItemClassString="PrimalItemResource_Flint_C",Quantity=(MaxItemQuantity=1000,bIgnoreMultiplier=true))
 - (ItemClassString="PrimalItemResource_FracturedGem_C",Quantity=(MaxItemQuantity=1000,bIgnoreMultiplier=true))
