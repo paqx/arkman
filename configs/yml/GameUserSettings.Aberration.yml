@@ -20,7 +20,7 @@ ServerSettings:
   ServerCrosshair: true
   ServerPassword: ""
   ServerAdminPassword: ${ABERRATION_SERVER_ADMIN_PASS}
-  RCONPort: 29176
+  RCONPort: ${ABERRATION_RCON_PORT}
   TributeItemExpirationSeconds: 432000
   TributeDinoExpirationSeconds: 432000
   TributeCharacterExpirationSeconds: 432000
