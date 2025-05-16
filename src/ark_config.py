@@ -18,13 +18,39 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
     str, int, float, or bool.
     """
 
-    _BOOL_PATTERN = r"""^(?P<bool>true|false)$"""
-    _INT_PATTERN = r"""^(?P<int>[+-]?\d+)$"""
-    _FLOAT_PATTERN = r"""^(?P<float>[+-]?\d*\.\d+)$"""
+    _BOOL_PATTERN = r"""
+        ^               # Start of string
+        (?P<bool>       # Named capture group 'bool'
+            true        # Literal 'true'
+            |           # OR
+            false       # Literal 'false'
+        )               # End of capture group
+        $               # End of string
+    """
 
-    BOOL_RE = re.compile(_BOOL_PATTERN, re.IGNORECASE)
-    INT_RE = re.compile(_INT_PATTERN)
-    FLOAT_RE = re.compile(_FLOAT_PATTERN)
+    _INT_PATTERN = r"""
+        ^               # Start of string
+        (?P<int>        # Named capture group 'int'
+            [+-]?       # Optional + or - sign
+            \d+         # One or more digits
+        )               # End of capture group
+        $               # End of string
+    """
+
+    _FLOAT_PATTERN = """
+        ^               # Start of string
+        (?P<float>      # Named capture group 'float'
+            [+-]?       # Optional + or - sign
+            \d*         # Zero or more digits (optional before decimal)
+            \.          # Decimal point
+            \d+         # One or more digits (required after decimal)
+        )               # End of capture group
+        $               # End of string
+    """
+
+    BOOL_RE = re.compile(_BOOL_PATTERN, re.IGNORECASE | re.VERBOSE)
+    INT_RE = re.compile(_INT_PATTERN, re.VERBOSE)
+    FLOAT_RE = re.compile(_FLOAT_PATTERN, re.VERBOSE)
 
     ALLOWED_TYPES = (str, int, float, bool)
 
@@ -361,5 +387,5 @@ class ArkConfig:
             raise FileNotFoundError(
                 f"Include file does not exist: {include_path}")
 
-        with open(include_path, 'r') as f:
+        with open(include_path, 'r', encoding='utf-8') as f:
             return yaml.safe_load(f)
