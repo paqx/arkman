@@ -7,7 +7,7 @@ from .complex_value import ComplexValue
 
 
 @dataclass
-class ItemEntry:
+class ItemEntry(ComplexValue):
     """
     Represents an item entry in a supply crate.
 
@@ -159,7 +159,6 @@ class ItemEntry:
 
     @classmethod
     def from_dict(cls, data: dict) -> Self:
-        """Create an instance of ItemEntry from a dictionary."""
         return cls(
             ItemEntryName=data.get("ItemEntryName"),
             EntryWeight=data.get("EntryWeight"),
@@ -191,7 +190,7 @@ class ItemEntry:
 
 
 @dataclass
-class ItemSet:
+class ItemSet(ComplexValue):
     """
     Represents a set of items that can appear in a supply crate.
 
@@ -255,7 +254,6 @@ class ItemSet:
 
     @classmethod
     def from_dict(cls, data: dict) -> Self:
-        """Create an instance of ItemSet from a dictionary."""
         item_entries = data.get("ItemEntries", [])
 
         if all(isinstance(item, dict) for item in item_entries):
@@ -351,8 +349,6 @@ class ConfigOverrideSupplyCrateItems(ComplexValue):
 
     @classmethod
     def from_dict(cls, data: dict) -> Self:
-        """
-        Create an instance of ConfigOverrideSupplyCrateItems from a dictionary."""
         item_sets = data.get("ItemSets", [])
 
         if all(isinstance(item, dict) for item in item_sets):

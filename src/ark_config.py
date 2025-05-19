@@ -10,12 +10,14 @@ from src.complex_values import (
     ComplexValue,
     ConfigOverrideSupplyCrateItems,
     ConfigOverrideItemMaxQuantity,
+    ConfigAddNPCSpawnEntriesContainer,
 )
 
 ArkConfigPrimitiveValue = Union[str, int, float, bool]
 ArkConfigComplexValue = Union[
     ConfigOverrideSupplyCrateItems,
-    ConfigOverrideItemMaxQuantity
+    ConfigOverrideItemMaxQuantity,
+    ConfigAddNPCSpawnEntriesContainer
 ]
 ArkConfigValue = Union[
     Union[ArkConfigPrimitiveValue, ArkConfigComplexValue],
@@ -70,6 +72,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
     COMPLEX_VALUE_MAP = {
         'ConfigOverrideSupplyCrateItems': ConfigOverrideSupplyCrateItems,
         'ConfigOverrideItemMaxQuantity': ConfigOverrideItemMaxQuantity,
+        'ConfigAddNPCSpawnEntriesContainer': ConfigAddNPCSpawnEntriesContainer,
     }
 
     def __setitem__(self, key: str, item):

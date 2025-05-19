@@ -7,7 +7,7 @@ from .complex_value import ComplexValue
 
 
 @dataclass
-class Quantity:
+class Quantity(ComplexValue):
     """
     Represents quantity restrictions for an item class.
 
@@ -31,7 +31,6 @@ class Quantity:
 
     @classmethod
     def from_dict(cls, data: dict) -> Self:
-        """Create an instance of Quantity from a dictionary."""
         return cls(
             MaxItemQuantity=data.get("MaxItemQuantity"),
             bIgnoreMultiplier=data.get("bIgnoreMultiplier")
@@ -63,8 +62,6 @@ class ConfigOverrideItemMaxQuantity(ComplexValue):
 
     @classmethod
     def from_dict(cls, data: dict) -> Self:
-        """
-        Create an instance of ConfigOverrideItemMaxQuantity from a dictionary."""
         quantity = data["Quantity"]
 
         if isinstance(quantity, dict):
