@@ -1,0 +1,9 @@
+- NPCSpawnEntriesContainerClassString: "DinoSpawnEntriesSwamp_C"
+  NPCSpawnEntries:
+    - AnEntryName: "Ragnarok_Rhynio_Swamp"
+      EntryWeight: 0.125
+      NPCsToSpawnStrings:
+        - "Rhynio_Character_BP_C"
+  NPCSpawnLimits:
+    - NPCClassString: "Rhynio_Character_BP_C"
+      MaxPercentageOfDesiredNumToAllow: 0.01
