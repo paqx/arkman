@@ -1,12 +1,26 @@
 import re
 from collections import UserDict, defaultdict
+from dataclasses import asdict
 from typing import Union, Self, Literal, Optional
 from os import PathLike, environ, path
 
 import yaml
 
+from src.complex_values import (
+    ComplexValue,
+    ConfigOverrideSupplyCrateItems,
+    ConfigOverrideItemMaxQuantity,
+)
+
 ArkConfigPrimitiveValue = Union[str, int, float, bool]
-ArkConfigValue = Union[ArkConfigPrimitiveValue, list[ArkConfigPrimitiveValue]]
+ArkConfigComplexValue = Union[
+    ConfigOverrideSupplyCrateItems,
+    ConfigOverrideItemMaxQuantity
+]
+ArkConfigValue = Union[
+    Union[ArkConfigPrimitiveValue, ArkConfigComplexValue],
+    list[Union[ArkConfigPrimitiveValue, ArkConfigComplexValue]]
+]
 
 
 class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
@@ -37,7 +51,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
         $               # End of string
     """
 
-    _FLOAT_PATTERN = """
+    _FLOAT_PATTERN = r"""
         ^               # Start of string
         (?P<float>      # Named capture group 'float'
             [+-]?       # Optional + or - sign
@@ -52,7 +66,11 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
     INT_RE = re.compile(_INT_PATTERN, re.VERBOSE)
     FLOAT_RE = re.compile(_FLOAT_PATTERN, re.VERBOSE)
 
-    ALLOWED_TYPES = (str, int, float, bool)
+    ALLOWED_TYPES = (str, int, float, bool, dict, ComplexValue)
+    COMPLEX_VALUE_MAP = {
+        'ConfigOverrideSupplyCrateItems': ConfigOverrideSupplyCrateItems,
+        'ConfigOverrideItemMaxQuantity': ConfigOverrideItemMaxQuantity,
+    }
 
     def __setitem__(self, key: str, item):
         """
@@ -68,28 +86,56 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
 
         if not (is_allowed_type or is_allowed_list):
             raise TypeError(
-                f"Value must be str, int, float, bool, or a list of "
-                f"these types, not {type(item).__name__} for key {key}"
+                "Value must be str, int, float, bool, dict, ComplexValue, or a list "
+                f"of these types, not {type(item).__name__} for key {key}"
             )
 
-        if isinstance(item, str):
-            item = self.parse(item)
+        if isinstance(item, list) and key in self.COMPLEX_VALUE_MAP:
+            complex_item = []
+            cls = self._get_complex_value_cls(key)
 
+            for i in item:
+                if isinstance(i, (str, ComplexValue)):
+                    complex_item.append(i)
+                elif isinstance(i, dict):
+                    complex_item.append(cls.from_dict(i))
+                else:
+                    raise ValueError(
+                        f"Invalid type {type(i)} for complex value {key}")
+
+            item = complex_item
+        elif isinstance(item, str):
+            item = self._parse_value(item)
+
+        # Handle existing keys
         if key in self.data:
             existing = self.data[key]
 
             if isinstance(existing, list):
-                existing.append(item)
+                # If existing is a list, append the new item(s)
+                if isinstance(item, list):
+                    existing.extend(item)
+                else:
+                    existing.append(item)
             else:
-                self.data[key] = [existing, item]
+                # If existing is not a list, create a new list with both values
+                if isinstance(item, list):
+                    self.data[key] = [existing, *item]
+                else:
+                    self.data[key] = [existing, item]
         else:
+            # New key - store directly
             self.data[key] = item
 
     def __repr__(self):
         """Return a string representation of the section."""
         return f"ArkConfigSection({self.data!r})"
 
-    def parse(self, value: str) -> ArkConfigValue:
+    def _get_complex_value_cls(self, key: str) -> type[ComplexValue]:
+        """Get class of a complex value by key"""
+        return self.COMPLEX_VALUE_MAP[key]
+
+    def _parse_value(self, value: str) -> ArkConfigPrimitiveValue:
         """
         Parse a string value to its respective type (bool, int, float), or
         fall back to str.
@@ -154,6 +200,9 @@ class ArkConfig:
 
     def __getitem__(self, section_name: str) -> ArkConfigSection:
         """Return the section by its name."""
+        if section_name not in self._config:
+            raise KeyError(f"Section '{section_name}' not found")
+
         return self._config[section_name]
 
     def __setitem__(self, section_name: str, value):
@@ -288,7 +337,22 @@ class ArkConfig:
 
     def to_dict(self) -> dict[str, dict[str, ArkConfigValue]]:
         """Return the configuration as a nested dictionary."""
-        return {k: dict(v) for k, v in self._config.items()}
+        result = {}
+
+        for section_name, section in self._config.items():
+            section_dict = {}
+
+            for key, value in section.items():
+                if isinstance(value, ComplexValue):
+                    section_dict[key] = asdict(value)
+                elif isinstance(value, list):
+                    section_dict[key] = [asdict(item) if isinstance(
+                        item, ComplexValue) else item for item in value]
+                else:
+                    section_dict[key] = value
+            result[section_name] = section_dict
+
+        return result
 
     def to_yaml(self) -> str:
         """Return the configuration as a YAML-formatted string."""
