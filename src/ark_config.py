@@ -1,5 +1,6 @@
 import re
 from collections import UserDict, defaultdict
+from collections.abc import Mapping
 from dataclasses import asdict
 from typing import Union, Self, Literal, Optional
 from os import PathLike, environ, path
@@ -68,7 +69,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
     INT_RE = re.compile(_INT_PATTERN, re.VERBOSE)
     FLOAT_RE = re.compile(_FLOAT_PATTERN, re.VERBOSE)
 
-    ALLOWED_TYPES = (str, int, float, bool, dict, ComplexValue)
+    ALLOWED_TYPES = (str, int, float, bool, Mapping, ComplexValue)
     COMPLEX_VALUE_MAP = {
         'ConfigOverrideSupplyCrateItems': ConfigOverrideSupplyCrateItems,
         'ConfigOverrideItemMaxQuantity': ConfigOverrideItemMaxQuantity,
@@ -89,8 +90,9 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
 
         if not (is_allowed_type or is_allowed_list):
             raise TypeError(
-                "Value must be str, int, float, bool, dict, ComplexValue, or a list "
-                f"of these types, not {type(item).__name__} for key {key}"
+                "Value must be str, int, float, bool, Mapping, ComplexValue, "
+                f"or a list of these types, not {type(item).__name__} for key "
+                f"{key}"
             )
 
         if isinstance(item, list) and key in self.COMPLEX_VALUE_MAP:
@@ -100,7 +102,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
             for i in item:
                 if isinstance(i, (str, ComplexValue)):
                     complex_item.append(i)
-                elif isinstance(i, dict):
+                elif isinstance(i, Mapping):
                     complex_item.append(cls.from_dict(i))
                 else:
                     raise ValueError(
@@ -318,9 +320,10 @@ class ArkConfig:
         ArkConfig
             A new ArkConfig instance containing the merged configuration.
         """
-        merged = ArkConfig(encoding=self.encoding)
+        encoding = other.encoding or self.encoding
+        merged = ArkConfig(encoding=encoding)
         section_names = {
-            k for k in self.section_names + other.section_names}
+            k: None for k in self.section_names + other.section_names}
 
         for section_name in section_names:
             merged[section_name] = self[section_name] | other[section_name]
