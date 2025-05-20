@@ -148,7 +148,7 @@ The goal is to use a GitOps approach for managing ARK server configurations. The
 - **Edit & Version Changes**  
   Make any configuration changes by editing the YAML files. Use environment variables and YAML includes:
   ```yaml
-  Message: ${MESSAGE_OF_THE_DAY}
+  Message: ${MOTD}
   OverridePlayerLevelEngramPoints: !include OverridePlayerLevelEngramPoints.yml
   ```
 
