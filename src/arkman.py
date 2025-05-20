@@ -25,7 +25,7 @@ def _handler_pull(args):
 
     for server in servers:
         print("=" * 60)
-        print(f"Connecting to server: {server.name} ({server.host})")
+        print(f"Pulling from server: {server.name} ({server.host})")
         print("=" * 60)
 
         try:
@@ -63,8 +63,6 @@ def _handler_pull(args):
         ftp.quit()
         print(f"DONE pulling files for {server.name}\n")
 
-    print("=" * 60)
-
 
 def _handler_push(args):
     """
@@ -77,7 +75,7 @@ def _handler_push(args):
 
     for server in servers:
         print("=" * 60)
-        print(f"Connecting to server: {server.name} ({server.host})")
+        print(f"Pushing to server: {server.name} ({server.host})")
         print("=" * 60)
 
         try:
@@ -120,15 +118,21 @@ def _handler_push(args):
         ftp.quit()
         print(f"DONE pushing files for {server.name}\n")
 
-    print("=" * 60)
-
 
 def _handler_load(args):
     """
     Create YAML configs from INI configs.
     """
-    for server in CFG.servers:
-        print(f"Processing server: {server.name}")
+    if args.servers is not None:
+        servers = [s for s in CFG.servers if s.name in args.servers]
+    else:
+        servers = CFG.servers
+
+    for server in servers:
+        print("=" * 60)
+        print(f"Loading server: {server.name} ({server.host})")
+        print("=" * 60)
+
         filenames = REMOTE_FILES['/ShooterGame/Saved/Config/WindowsServer']
 
         for filename, encoding in filenames:
@@ -151,15 +155,23 @@ def _handler_load(args):
             print(f"Saving configuration to YAML: {yaml_path}")
             config.to_yaml_file(yaml_path)
 
-        print(f"Completed processing server: {server.name}\n")
+        print(f"DONE loading server: {server.name}\n")
 
 
 def _handler_dump(args):
     """
     Create INI configs from YAML configs.
     """
-    for server in CFG.servers:
-        print(f"Processing server: {server.name}")
+    if args.servers is not None:
+        servers = [s for s in CFG.servers if s.name in args.servers]
+    else:
+        servers = CFG.servers
+
+    for server in servers:
+        print("=" * 60)
+        print(f"Dumping server: {server.name} ({server.host})")
+        print("=" * 60)
+
         filenames = REMOTE_FILES['/ShooterGame/Saved/Config/WindowsServer']
 
         for filename, encoding in filenames:
@@ -182,7 +194,7 @@ def _handler_dump(args):
             print(f"Saving configuration to INI: {ini_path}")
             config.write(ini_path)
 
-        print(f"Completed processing server: {server.name}\n")
+        print(f"DONE dumping server: {server.name}\n")
 
 
 def main():
@@ -213,11 +225,15 @@ def main():
     # Load command
     parser_load = subparsers.add_parser(
         'load', help='Generate YAML configs from INI configs')
+    parser_load.add_argument(
+        '-s', '--servers', nargs='+', choices=server_names)
     parser_load.set_defaults(func=_handler_load)
 
     # Dump command
     parser_dump = subparsers.add_parser(
         'dump', help='Generate INI configs from YAML configs')
+    parser_dump.add_argument(
+        '-s', '--servers', nargs='+', choices=server_names)
     parser_dump.set_defaults(func=_handler_dump)
 
     args = parser.parse_args()
