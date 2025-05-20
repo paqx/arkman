@@ -6,4 +6,4 @@
         - "Rhynio_Character_BP_C"
   NPCSpawnLimits:
     - NPCClassString: "Rhynio_Character_BP_C"
-      MaxPercentageOfDesiredNumToAllow: 0.0001
+      MaxPercentageOfDesiredNumToAllow: 0.00001
