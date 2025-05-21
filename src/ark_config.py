@@ -12,6 +12,7 @@ from src.complex_values import (
     ConfigAddNPCSpawnEntriesContainer,
     ConfigOverrideItemMaxQuantity,
     ConfigOverrideSupplyCrateItems,
+    DinoSpawnWeightMultiplier,
 )
 
 ArkConfigPrimitiveValue = Union[str, int, float, bool]
@@ -74,6 +75,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
         'ConfigOverrideSupplyCrateItems': ConfigOverrideSupplyCrateItems,
         'ConfigOverrideItemMaxQuantity': ConfigOverrideItemMaxQuantity,
         'ConfigAddNPCSpawnEntriesContainer': ConfigAddNPCSpawnEntriesContainer,
+        'DinoSpawnWeightMultiplier': DinoSpawnWeightMultiplier,
     }
 
     def __setitem__(self, key: str, item):
