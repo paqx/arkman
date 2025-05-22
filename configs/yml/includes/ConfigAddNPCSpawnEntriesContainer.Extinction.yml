@@ -1,9 +1,9 @@
 - NPCSpawnEntriesContainerClassString: "Ext_DinoSpawnEntries_Forest_C"
   NPCSpawnEntries:
     - AnEntryName: "Ext_Sinomacrops_Forest"
-      EntryWeight: 0.5
       NPCsToSpawnStrings:
         - "Sinomacrops_Character_BP_C"
+      EntryWeight: 0.5
   NPCSpawnLimits:
     - NPCClassString: "Sinomacrops_Character_BP_C"
       MaxPercentageOfDesiredNumToAllow: 0.3
