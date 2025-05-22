@@ -36,5 +36,5 @@
   PerLevelStatsMultiplier_Player[10]: 2.0
   PerLevelStatsMultiplier_Player[11]: 2.0
   PerLevelStatsMultiplier_DinoTamed[7]: 2.75
-  UseCorpseLifeSpanMultiplier: 3.0
+  UseCorpseLifeSpanMultiplier: 4.0
   ConfigAddNPCSpawnEntriesContainer: !include ConfigAddNPCSpawnEntriesContainer.Extinction.yml
