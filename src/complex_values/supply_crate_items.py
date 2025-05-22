@@ -267,6 +267,8 @@ class ItemSet(ComplexValue):
                 "dictionaries"
             )
 
+        item_entries_objs = item_entries_objs if item_entries_objs else None
+
         return cls(
             SetName=data.get("SetName"),
             ItemEntries=item_entries_objs,
@@ -361,6 +363,8 @@ class ConfigOverrideSupplyCrateItems(ComplexValue):
                 "ItemSets attribute must be a list of ItemSet instances or a "
                 f"list of dictionaries representing ItemSet, "
                 f"not {type(item_sets)}")
+
+        item_sets_objs = item_sets_objs if item_sets_objs else None
 
         return cls(
             SupplyCrateClassString=data.get("SupplyCrateClassString"),
