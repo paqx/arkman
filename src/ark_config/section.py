@@ -14,7 +14,7 @@ from .config_values import ArkConfigValue, ArkConfigPrimitiveValue
 
 class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
     """
-    Represents a section of an Ark Survival Evolved configuration file.
+    Represents a section of an ARK configuration file.
 
     This class can handle keys that appear multiple times in a section.
     Each key's value is parsed and stored as one of the following types:
