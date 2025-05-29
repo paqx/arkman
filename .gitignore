@@ -3,3 +3,4 @@ configs/ini/*
 .env
 *.pyc
 __pycache__/
+wip/

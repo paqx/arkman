@@ -57,6 +57,22 @@ def main():
         '-s', '--servers', nargs='+', choices=server_names)
     parser_dump.set_defaults(func=_config.dump)
 
+    # load_supply_crates_from_csv command
+    parser_load_supply_crates_from_csv = config_subparsers.add_parser(
+        'load_supply_crates_from_csv',
+        help='Generate ConfigOverrideSupplyCrateItems YAML configs from a '
+        'CSV file')
+    parser_load_supply_crates_from_csv.add_argument(
+        '-i', '--input_file', help='Absolute path to the CSV input file'
+    )
+    parser_load_supply_crates_from_csv.add_argument(
+        '-o', '--output_file',
+        help='Relative path to the YAML output file (will be placed in '
+        './config/includes)'
+    )
+    parser_load_supply_crates_from_csv.set_defaults(
+        func=_config.load_supply_crates_from_csv)
+
     # SUBCOMMAND: rcon
     rcon_subparsers = parser_rcon.add_subparsers(dest='action', required=True)
 
