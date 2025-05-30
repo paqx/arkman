@@ -1,39 +1,50 @@
 import csv
-from typing import Iterable, Callable
+from typing import Iterable, Callable, Optional
 from collections import defaultdict
 from os import PathLike
 
 from src.complex_values import ConfigOverrideSupplyCrateItems
 
 
-def get_bool(value: str) -> bool:
+def get_bool(value: str) -> Optional[bool]:
+    if value.strip() == '':
+        return None
     return value == "TRUE"
 
 
-def get_float(value: str) -> float:
+def get_int(value: str) -> Optional[int]:
+    if value.strip() == '':
+        return None
+    return int(float(value.replace(',', '.')))
+
+
+def get_float(value: str) -> Optional[float]:
+    if value.strip() == '':
+        return None
     return float(value.replace(',', '.'))
 
 
-def get_str_list(value: str) -> list[str]:
-    return [s.strip() for s in value.split(',')]
+def get_str_list(value: str, sep: Optional[str] = ',') -> list[str]:
+    return [s.strip() for s in value.split(sep)]
 
 
 TYPE_MAP = {
     # supply crate
-    'MinItemSets': int,
-    'MaxItemSets': int,
+    'MinItemSets': get_int,
+    'MaxItemSets': get_int,
     'bSetsRandomWithoutReplacement': get_bool,
+    'bAppendItemSets': get_bool,
 
     # item sets
     '_SetWeight': get_float,
-    '_MinNumItems': get_float,
-    '_MaxNumItems': get_float,
+    '_MinNumItems': get_int,
+    '_MaxNumItems': get_int,
     '_bItemsRandomWithoutReplacement': get_bool,
 
     # item entries
     '__EntryWeight': get_float,
     '__ItemClassStrings': get_str_list,
-    '__ItemsWeights': lambda x: [float(i) for i in get_str_list(x)],
+    '__ItemsWeights': lambda x: [get_float(i) for i in get_str_list(x, ';')],
     '__MinQuantity': get_float,
     '__MaxQuantity': get_float,
     "__MinQuality": get_float,

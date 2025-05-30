@@ -201,6 +201,6 @@ def load_supply_crates_from_csv(args):
 
     print(f"Saving configuration to YAML: {output_file}")
     with open(output_file, 'w', encoding='utf-8') as f:
-        yaml.dump(data, f)
+        yaml.dump(data, f, sort_keys=False)
 
     print("DONE")
