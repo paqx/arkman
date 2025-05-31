@@ -51,6 +51,8 @@ ServerSettings:
   ForceAllStructureLocking: true
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
+  ActiveEvent: Summer
+  EventColorsChanceOverride: 0.7
 MessageOfTheDay:
   Message: ${MOTD}
   Duration: 45

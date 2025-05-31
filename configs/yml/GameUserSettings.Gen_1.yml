@@ -53,6 +53,8 @@ ServerSettings:
   MaxHexagonsPerCharacter: 5000000
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
+  ActiveEvent: Summer
+  EventColorsChanceOverride: 0.7
 MessageOfTheDay:
   Message: ${MOTD}
   Duration: 45

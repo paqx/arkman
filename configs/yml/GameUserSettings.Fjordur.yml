@@ -52,6 +52,8 @@ ServerSettings:
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
   AllowCaveBuildingPvE: true
+  ActiveEvent: Summer
+  EventColorsChanceOverride: 0.7
 MessageOfTheDay:
   Message: ${MOTD}
   Duration: 45
