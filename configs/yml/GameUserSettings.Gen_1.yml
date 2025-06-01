@@ -49,6 +49,8 @@ ServerSettings:
   GlobalVoiceChat: true
   DayTimeSpeedScale: 0.5
   ForceAllStructureLocking: true
+  MaxHexagonsPerCharacter: 5000000
+  BaseHexagonRewardMultiplier: 1.5
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
 MessageOfTheDay:
