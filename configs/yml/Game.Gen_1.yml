@@ -37,3 +37,4 @@
   PerLevelStatsMultiplier_Player[11]: 2.0
   PerLevelStatsMultiplier_DinoTamed[7]: 2.75
   UseCorpseLifeSpanMultiplier: 4.0
+  BaseHexagonRewardMultiplier: 1.5
