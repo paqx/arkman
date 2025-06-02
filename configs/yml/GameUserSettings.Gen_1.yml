@@ -48,6 +48,7 @@ ServerSettings:
   StructurePickupTimeAfterPlacement: 30.0
   GlobalVoiceChat: true
   DayTimeSpeedScale: 0.5
+  AllowTekSuitPowersInGenesis: true
   ForceAllStructureLocking: true
   MaxHexagonsPerCharacter: 5000000
   PlayerCharacterFoodDrainMultiplier: 0.5
