@@ -2,6 +2,7 @@ import argparse
 
 from config import CFG
 from src import _ark_hoster
+from src import _bak
 from src import _config
 from src import _rcon
 
@@ -19,11 +20,13 @@ def main():
 
     # COMMANDS
     parser_config = subparsers.add_parser(
-        'config', help='Configuration management')
+        'config', help='Configuration management via FTP')
     parser_rcon = subparsers.add_parser(
         'rcon', help='Server management via RCON')
     parser_ark_hoster = subparsers.add_parser(
         'arkhoster', help='Server management via the web panel (this is specific to ark-hoster.ru)')
+    parser_bak = subparsers.add_parser(
+        'bak', help='Back-up management via FTP')
 
     # SUBCOMMAND: config
     config_subparsers = parser_config.add_subparsers(
@@ -133,6 +136,20 @@ def main():
         '-d', '--delay',  default=15, type=int, choices=restart_delays,
         help='Delay in minutes before the restart (default: 15)')
     parser_restart.set_defaults(func=_ark_hoster.restart)
+
+    # SUBCOMMAND: bak
+    bak_subparsers = parser_bak.add_subparsers(
+        dest='action', required=True)
+
+    # make command
+    parser_make_bak = bak_subparsers.add_parser(
+        'make', help='Create compressed local backups.'
+    )
+    parser_make_bak.add_argument(
+        '-s', '--servers', nargs='+', choices=server_names,
+        help='Specify which servers to back up'
+    )
+    parser_make_bak.set_defaults(func=_bak.make)
 
     args = parser.parse_args()
     args.func(args)
