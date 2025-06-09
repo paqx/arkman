@@ -21,7 +21,7 @@
   BabyCuddleLoseImprintQualitySpeedMultiplier: 0.0
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
-  SupplyCrateLootQualityMultiplier: 3
+  SupplyCrateLootQualityMultiplier: 2.5
   OverridePlayerLevelEngramPoints: !include OverridePlayerLevelEngramPoints.yml
   ConfigOverrideItemMaxQuantity: !include ConfigOverrideItemMaxQuantity.yml
   PerLevelStatsMultiplier_Player[0]: 2.0
