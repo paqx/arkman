@@ -34,7 +34,9 @@ ServerSettings:
   AllowIntegratedSPlusStructures: true
   AllowHideDamageSourceFromLogs: true
   RaidDinoCharacterFoodDrainMultiplier: 1.0
+  DisableDinoDecayPvE: false
   PvEDinoDecayPeriodMultiplier: 1.0
+  AutoDestroyDecayedDinos: true
   KickIdlePlayersPeriod: 3600.0
   PerPlatformMaxStructuresMultiplier: 1.0
   ListenServerTetherDistanceMultiplier: 1.0
