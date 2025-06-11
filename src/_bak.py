@@ -22,9 +22,6 @@ EXTENSIONS = [
 EXT_PATTERN = r'\.(?:' + '|'.join(EXTENSIONS) + r')$'
 EXT_RE = re.compile(EXT_PATTERN, re.IGNORECASE)
 
-LAST_SAVE_PATTERN = r'^\w+(?:_P)?\.ark$'
-LAST_SAVE_RE = re.compile(LAST_SAVE_PATTERN, re.IGNORECASE)
-
 
 def ftp_mlsd_list(ftp: ftplib.FTP) -> dict[str, dict]:
     """Return a dict of files and their facts from FTP MLSD listing."""
@@ -47,15 +44,12 @@ def should_fetch(local_dir: str, filename: str, facts: dict[str, str]):
     if not os.path.exists(local_path):
         return True
 
-    if LAST_SAVE_RE.match(filename):
-        ftp_time = datetime.strptime(
-            facts["modify"][:14], "%Y%m%d%H%M%S").timestamp()
-        local_mtime = os.path.getmtime(local_path)
+    ftp_time = datetime.strptime(
+        facts["modify"][:14], "%Y%m%d%H%M%S").timestamp()
+    local_mtime = os.path.getmtime(local_path)
 
-        if abs(local_mtime - ftp_time) > 120:
-            return True
-
-        return False
+    if abs(local_mtime - ftp_time) > 120:
+        return True
 
     return False
 
