@@ -224,7 +224,7 @@ ScalabilityGroups:
 SessionSettings:
   SessionName: ${CRYSTAL_ISLES_SESSION_NAME}
 /Script/Engine.GameSession:
-  MaxPlayers: 20
+  MaxPlayers: 30
 /Game/PrimalEarth/CoreBlueprints/TestGameMode.TestGameMode_C:
   bServerGameLogEnabled: true
   ConfigOverrideSupplyCrateItems: !include ConfigOverrideSupplyCrateItems.yml
