@@ -147,7 +147,7 @@ def restart(args):
 
         if seconds_left == 30:
             for ark_rcon in ark_rcons:
-                print(f'Saving worlds on {ark_rcon.name}...')
+                print(f'Saving world on {ark_rcon.name}...')
                 ark_rcon.save_world()
 
                 print('Kicking all players...')

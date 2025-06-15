@@ -38,7 +38,8 @@ ServerSettings:
   PvEDinoDecayPeriodMultiplier: 1.0
   AutoDestroyDecayedDinos: true
   KickIdlePlayersPeriod: 3600.0
-  PerPlatformMaxStructuresMultiplier: 1.0
+  PerPlatformMaxStructuresMultiplier: 3.0
+  OverrideStructurePlatformPrevention: true
   ListenServerTetherDistanceMultiplier: 1.0
   MaxPersonalTamedDinos: 300
   MaxTamedDinos: 50000.0
