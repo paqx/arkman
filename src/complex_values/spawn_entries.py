@@ -215,7 +215,7 @@ class NPCSpawnEntry(ComplexValue):
 
         if self.NPCsToSpawnPercentageChance is not None:
             chance = ",".join(
-                f"{c:.3f}" for c in self.NPCsToSpawnPercentageChance)
+                f"{c:.6f}" for c in self.NPCsToSpawnPercentageChance)
             parts.append(f'NPCsToSpawnPercentageChance=({chance})')
 
         if self.EntryWeight is not None:
@@ -281,19 +281,32 @@ class NPCSpawnEntry(ComplexValue):
                 " instances or a list of dictionaries representing "
                 f"NPCsSpawnOffsets, not {type(spawn_offsets)}")
 
-        difficulty_ranges = data.get("NPCDifficultyLevelRanges", [])
+        chance = data.get('NPCsToSpawnPercentageChance', [])
 
-        if all(isinstance(r, dict) for r in difficulty_ranges):
-            difficulty_ranges_objs = [
-                NPCDifficultyLevelRange.from_dict(r) for r in difficulty_ranges]
-        elif all(isinstance(r, NPCDifficultyLevelRange) for r in difficulty_ranges):
-            difficulty_ranges_objs = difficulty_ranges
+        if (not (isinstance(chance, list)
+                 and all(isinstance(c, float) for c in chance))):
+            raise ValueError(
+                "NPCsToSpawnPercentageChance attribute must be a list of float "
+                "values"
+            )
+
+        ranges = data.get("NPCDifficultyLevelRanges", [])
+
+        if all(isinstance(r, dict) for r in ranges):
+            ranges_objs = [
+                NPCDifficultyLevelRange.from_dict(r) for r in ranges]
+        elif all(isinstance(r, NPCDifficultyLevelRange) for r in ranges):
+            ranges_objs = ranges
         else:
             raise ValueError(
                 "NPCDifficultyLevelRanges must be a list of "
                 "NPCDifficultyLevelRange instances or dictionaries, not "
-                f"{type(difficulty_ranges)}"
+                f"{type(ranges)}"
             )
+
+        spawn_offsets_objs = spawn_offsets_objs if spawn_offsets_objs else None
+        chance = chance if chance else None
+        ranges_objs = ranges_objs if ranges_objs else None
 
         return cls(
             AnEntryName=data.get("AnEntryName"),
@@ -304,7 +317,7 @@ class NPCSpawnEntry(ComplexValue):
             EntryWeight=data.get("EntryWeight"),
             ManualSpawnPointSpreadRadius=data.get(
                 "ManualSpawnPointSpreadRadius"),
-            NPCDifficultyLevelRanges=difficulty_ranges_objs,
+            NPCDifficultyLevelRanges=ranges_objs,
             RandGroupSpawnOffsetZMin=data.get("RandGroupSpawnOffsetZMin"),
             RandGroupSpawnOffsetZMax=data.get("RandGroupSpawnOffsetZMax"),
             NPCOverrideLevel=data.get("NPCOverrideLevel"),
@@ -418,6 +431,9 @@ class ConfigAddNPCSpawnEntriesContainer(ComplexValue):
             raise ValueError(
                 "NPCSpawnLimits attribute must be a list of NPCSpawnLimit "
                 "instances or dictionaries representing NPCSpawnLimit")
+
+        spawn_entries_objs = spawn_entries_objs if spawn_entries_objs else None
+        spawn_limits_objs = spawn_limits_objs if spawn_limits_objs else None
 
         return cls(
             NPCSpawnEntriesContainerClassString=data.get(
