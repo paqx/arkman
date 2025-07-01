@@ -53,7 +53,7 @@ ServerSettings:
   PlayerCharacterWaterDrainMultiplier: 0.5
   AllowCaveBuildingPvE: true
 MessageOfTheDay:
-  Message: ${MESSAGE_OF_THE_DAY}
+  Message: ${MOTD}
   Duration: 45
 /Script/ShooterGame.ShooterGameUserSettings:
   MasterAudioVolume: 1.0

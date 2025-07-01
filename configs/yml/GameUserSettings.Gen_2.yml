@@ -51,7 +51,7 @@ ServerSettings:
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
 MessageOfTheDay:
-  Message: ${MESSAGE_OF_THE_DAY}
+  Message: ${MOTD}
   Duration: 45
 /Script/ShooterGame.ShooterGameUserSettings:
   MasterAudioVolume: 1.0
