@@ -1,8 +1,12 @@
 import ftplib
 import os
+import sys
+from dataclasses import asdict
 from pathlib import Path
 
-from src.ark_config import ArkConfig
+import yaml
+
+from src.ark_config import ArkConfig, csv_to_supply_crate_items
 from ._utils import get_servers
 
 
@@ -175,3 +179,28 @@ def dump(args):
             config.write(ini_path)
 
         print(f"DONE dumping server: {server.name}\n")
+
+
+def load_supply_crates_from_csv(args):
+    """
+    Create ConfigOverrideSupplyCrateItems YAML configs from a CSV file.
+    """
+    def dict_without_nones(value) -> dict:
+        return {k: v for k, v in value if v is not None}
+
+    if not os.path.isfile(args.input_file):
+        print(f"Error: CSV file '{args.input_file}' does not exist.")
+        sys.exit(1)
+
+    output_file = os.path.join('./configs/yml/includes', args.output_file)
+    output_dir = os.path.dirname(output_file)
+    os.makedirs(output_dir, exist_ok=True)
+    supply_crate_items = csv_to_supply_crate_items(args.input_file)
+    data = [asdict(
+        i, dict_factory=dict_without_nones) for i in supply_crate_items]
+
+    print(f"Saving configuration to YAML: {output_file}")
+    with open(output_file, 'w', encoding='utf-8') as f:
+        yaml.dump(data, f)
+
+    print("DONE")

@@ -3,13 +3,13 @@ from typing import Optional
 from config import CFG, Server
 
 
-def get_servers(server_names: Optional[Server] = None) -> list[Server]:
+def get_servers(server_names: Optional[str] = None) -> list[Server]:
     """
     Get a list of servers by their names.
 
     Parameters
     ----------
-    server_names : Optional[Server], default None
+    server_names : Optional[str], default None
         A list of server names to filter the servers. If None, all servers are returned.
 
     Returns
