@@ -15,13 +15,17 @@ def get_bool(value: str) -> Optional[bool]:
 def get_int(value: str) -> Optional[int]:
     if value.strip() == '':
         return None
-    return int(float(value.replace(',', '.')))
+    value = value.replace(',', '.')
+    value = value.replace('\xa0', '')
+    return int(float(value))
 
 
 def get_float(value: str) -> Optional[float]:
     if value.strip() == '':
         return None
-    return float(value.replace(',', '.'))
+    value = value.replace(',', '.')
+    value = value.replace('\xa0', '')
+    return float(value)
 
 
 def get_str_list(value: str, sep: Optional[str] = ',') -> list[str]:
@@ -58,6 +62,7 @@ SUPPLY_CRATE_KEYS = [
     "MinItemSets",
     "MaxItemSets",
     "bSetsRandomWithoutReplacement",
+    "bAppendItemSets",
 ]
 
 ITEM_SETS_KEYS = [
