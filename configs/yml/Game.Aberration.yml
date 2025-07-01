@@ -11,9 +11,9 @@
   MatingIntervalMultiplier: 0.1
   MatingSpeedMultiplier: 5.0
   EggHatchSpeedMultiplier: 5.0
-  BabyMatureSpeedMultiplier: 10
+  BabyMatureSpeedMultiplier: 10.0
   BabyFoodConsumptionSpeedMultiplier: 0.25
-  GlobalSpoilingTimeMultiplier: 2
+  GlobalSpoilingTimeMultiplier: 2.0
   BabyImprintingStatScaleMultiplier: 2.5
   BabyCuddleIntervalMultiplier: 0.03
   BabyImprintAmountMultiplier: 1000.0
@@ -37,3 +37,4 @@
   PerLevelStatsMultiplier_Player[10]: 2.0
   PerLevelStatsMultiplier_Player[11]: 2.0
   PerLevelStatsMultiplier_DinoTamed[7]: 2.75
+  UseCorpseLifeSpanMultiplier: 3.0
