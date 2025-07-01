@@ -51,7 +51,7 @@ ServerSettings:
   ForceAllStructureLocking: true
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
-  DinoCharacterHealthRecoveryMultiplier: 2.5
+  DinoCharacterHealthRecoveryMultiplier: 2.0
 MessageOfTheDay:
   Message: ${MOTD}
   Duration: 45

@@ -51,6 +51,7 @@ ServerSettings:
   ForceAllStructureLocking: true
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
+  DinoCharacterHealthRecoveryMultiplier: 2.0
   AllowCaveBuildingPvE: true
 MessageOfTheDay:
   Message: ${MOTD}
