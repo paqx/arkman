@@ -4,3 +4,4 @@ configs/ini/*
 *.pyc
 __pycache__/
 wip/
+bak/
