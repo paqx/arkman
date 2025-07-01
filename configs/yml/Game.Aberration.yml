@@ -12,7 +12,7 @@
   MatingSpeedMultiplier: 5.0
   EggHatchSpeedMultiplier: 5.0
   BabyMatureSpeedMultiplier: 10
-  BabyFoodConsumptionSpeedMultiplier: 0.5
+  BabyFoodConsumptionSpeedMultiplier: 0.25
   GlobalSpoilingTimeMultiplier: 2
   BabyImprintingStatScaleMultiplier: 2.5
   BabyCuddleIntervalMultiplier: 0.04
