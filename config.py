@@ -1,6 +1,7 @@
 import os
 from dataclasses import dataclass
 from dotenv import load_dotenv
+from typing import Optional
 
 load_dotenv()
 
@@ -14,6 +15,7 @@ class Server:
     password: str
     admin_password: str
     rcon_port: int
+    id_: Optional[int]
 
 
 @dataclass
@@ -30,6 +32,7 @@ _servers = [
         password=os.environ["ABERRATION_PASS"],
         admin_password=os.environ["ABERRATION_SERVER_ADMIN_PASS"],
         rcon_port=int(os.environ["ABERRATION_RCON_PORT"]),
+        id_=os.environ.get("ABERRATION_SERVER_ID"),
     ),
     Server(
         name="Crystal_Isles",
@@ -38,6 +41,7 @@ _servers = [
         password=os.environ["CRYSTAL_ISLES_PASS"],
         admin_password=os.environ["CRYSTAL_ISLES_SERVER_ADMIN_PASS"],
         rcon_port=int(os.environ["CRYSTAL_ISLES_RCON_PORT"]),
+        id_=os.environ.get("CRYSTAL_ISLES_SERVER_ID"),
     ),
     Server(
         name="Extinction",
@@ -46,6 +50,7 @@ _servers = [
         password=os.environ["EXTINCTION_PASS"],
         admin_password=os.environ["EXTINCTION_SERVER_ADMIN_PASS"],
         rcon_port=int(os.environ["EXTINCTION_RCON_PORT"]),
+        id_=os.environ.get("EXTINCTION_SERVER_ID"),
     ),
     Server(
         name="Fjordur",
@@ -54,6 +59,7 @@ _servers = [
         password=os.environ["FJORDUR_PASS"],
         admin_password=os.environ["FJORDUR_SERVER_ADMIN_PASS"],
         rcon_port=int(os.environ["FJORDUR_RCON_PORT"]),
+        id_=os.environ.get("FJORDUR_SERVER_ID"),
     ),
     Server(
         name="Gen_1",
@@ -62,6 +68,7 @@ _servers = [
         password=os.environ["GEN_1_PASS"],
         admin_password=os.environ["GEN_1_SERVER_ADMIN_PASS"],
         rcon_port=int(os.environ["GEN_1_RCON_PORT"]),
+        id_=os.environ.get("GEN_1_SERVER_ID"),
     ),
     Server(
         name="Gen_2",
@@ -70,6 +77,7 @@ _servers = [
         password=os.environ["GEN_2_PASS"],
         admin_password=os.environ["GEN_2_SERVER_ADMIN_PASS"],
         rcon_port=int(os.environ["GEN_2_RCON_PORT"]),
+        id_=os.environ.get("GEN_2_SERVER_ID"),
     ),
     Server(
         name="Island",
@@ -78,6 +86,7 @@ _servers = [
         password=os.environ["ISLAND_PASS"],
         admin_password=os.environ["ISLAND_SERVER_ADMIN_PASS"],
         rcon_port=int(os.environ["ISLAND_RCON_PORT"]),
+        id_=os.environ.get("ISLAND_SERVER_ID"),
     ),
     Server(
         name="Ragnarok",
@@ -86,7 +95,31 @@ _servers = [
         password=os.environ["RAGNAROK_PASS"],
         admin_password=os.environ["RAGNAROK_SERVER_ADMIN_PASS"],
         rcon_port=int(os.environ["RAGNAROK_RCON_PORT"]),
+        id_=os.environ.get("RAGNAROK_SERVER_ID"),
     ),
 ]
 
 CFG = Cfg(servers=_servers)
+
+
+@dataclass
+class ArkHoster:
+    """
+    Stores credentials and configuration needed to interact with the 
+    ark-hoster.ru web panel.
+    """
+    email: str
+    password: str
+    base_url: str
+    user_agent: str
+
+
+_EMAIL = os.environ.get('ARK_HOSTER_EMAIL')
+_USER_AGENT = f'arkman.py/1.0 (automation; contact: {_EMAIL})'
+
+ARK_HOSTER = ArkHoster(
+    email=_EMAIL,
+    password=os.environ.get('ARK_HOSTER_PASSWORD'),
+    base_url='https://panel.ark-hoster.ru',
+    user_agent=_USER_AGENT,
+)

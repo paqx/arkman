@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 from src.ark_config import ArkConfig
-from ._utils import servers
+from ._utils import get_servers
 
 
 REMOTE_FILES = {
@@ -18,7 +18,7 @@ def pull(args):
     """
     Pull configuration files from remote servers.
     """
-    for server in servers(args.servers):
+    for server in get_servers(args.servers):
         print("=" * 60)
         print(f"Pulling from server: {server.name} ({server.host})")
         print("=" * 60)
@@ -63,7 +63,7 @@ def push(args):
     """
     Push local configuration files to remote servers.
     """
-    for server in servers(args.servers):
+    for server in get_servers(args.servers):
         print("=" * 60)
         print(f"Pushing to server: {server.name} ({server.host})")
         print("=" * 60)
@@ -113,7 +113,7 @@ def load(args):
     """
     Create YAML configs from INI configs.
     """
-    for server in servers(args.servers):
+    for server in get_servers(args.servers):
         print("=" * 60)
         print(f"Loading server: {server.name} ({server.host})")
         print("=" * 60)
@@ -147,7 +147,7 @@ def dump(args):
     """
     Create INI configs from YAML configs.
     """
-    for server in servers(args.servers):
+    for server in get_servers(args.servers):
         print("=" * 60)
         print(f"Dumping server: {server.name} ({server.host})")
         print("=" * 60)

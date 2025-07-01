@@ -3,7 +3,7 @@ from typing import Optional
 from config import CFG, Server
 
 
-def servers(server_names: Optional[Server] = None) -> list[Server]:
+def get_servers(server_names: Optional[Server] = None) -> list[Server]:
     """
     Get a list of servers by their names.
 
