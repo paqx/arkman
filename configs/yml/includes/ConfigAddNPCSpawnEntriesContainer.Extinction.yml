@@ -3,7 +3,9 @@
     - AnEntryName: "Ext_Sinomacrops_Forest"
       NPCsToSpawnStrings:
         - "Sinomacrops_Character_BP_C"
-      EntryWeight: 0.5
+      NPCsToSpawnPercentageChance:
+        - 0.7
+      EntryWeight: 0.7
   NPCSpawnLimits:
     - NPCClassString: "Sinomacrops_Character_BP_C"
       MaxPercentageOfDesiredNumToAllow: 0.3
