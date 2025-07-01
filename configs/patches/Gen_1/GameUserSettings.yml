@@ -1,0 +1,67 @@
+ServerSettings:
+  DayTimeSpeedScale: 0.5
+  MaxPersonalTamedDinos: 300
+  RCONPort: 29164
+  ServerAdminPassword: ${GEN_1_SERVER_ADMIN_PASS}
+/Script/ShooterGame.ShooterGameUserSettings:
+  CharacterAudioVolume: 1.0
+  CompanionIsHiddenState: false
+  CompanionReactionVerbosity: 3
+  CompanionSubtitleVerbosityLevel: 3
+  DisableSubtitles: false
+  EnableDeathReactions: true
+  EnableEmoteReactions: true
+  EnableEnvironmentalReactions: true
+  EnableMovementSounds: true
+  EnableRespawnReactions: true
+  EnableSayHelloReactions: true
+  LastServerSearchIncludeServersWithActiveMods: true
+  StopExplorerNoteAudioOnClose: false
+  bForceDisableSuperDetailMode: true
+  bHasCompletedGen2: false
+  bHasSeenGen2Intro: false
+  bInventoryHideUnlearnedEngrams: false
+  bLowQualityAnimations: false
+  bRequestDefaultCharacterItemsOnce: false
+  bShowRTSKeyBinds: true
+  bShowedGenesis2DLCBackground: false
+  bShowedGenesisDLCBackground: false
+  bViewedARK2Trailer: false
+  bViewedAnimatedSeriesTrailer: false
+SessionSettings:
+  SessionName: ARK Shelter x5 PvE [RU] Genesis
+/Game/PrimalEarth/CoreBlueprints/TestGameMode.TestGameMode_C:
+  ConfigOverrideSupplyCrateItems:
+    - '(SupplyCrateClassString="SupplyCrate_Cave_QualityTier1_EX",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.900000)),SetWeight=0.015000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="SupplyCrate_Cave_QualityTier2_EX",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.900000)),SetWeight=0.015000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="SupplyCrate_Cave_QualityTier3_EX",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.900000)),SetWeight=0.015000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="DinoDropInventoryComponent_Beyla",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=3.000000,MaxQuality=7.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.250000,ChanceToActuallyGiveItem=0.100000)),SetWeight=0.015000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="DinoDropInventoryComponent_Hati",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=3.000000,MaxQuality=7.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.250000,ChanceToActuallyGiveItem=0.100000)),SetWeight=0.015000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="DinoDropInventoryComponent_Skoll",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=3.000000,MaxQuality=7.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.250000,ChanceToActuallyGiveItem=0.100000)),SetWeight=0.015000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="DinoDropInventoryComponent_Steinbjorn",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=3.000000,MaxQuality=7.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.250000,ChanceToActuallyGiveItem=0.100000)),SetWeight=0.015000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="SupplyCrate_Space_05_Obsidian",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,MaxQuality=4.300000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.125000,ChanceToActuallyGiveItem=0.300000)),SetWeight=0.002500,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="SupplyCrate_Ruins_LostIsland",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,MaxQuality=1.200000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.800000)),SetWeight=0.015000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="DinoDropInventoryComponent_WorldBoss_10Items",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=3.000000,MaxQuality=7.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.400000)),SetWeight=0.024000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="DinoDropInventoryComponent_WorldBoss_5Items",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=3.000000,MaxQuality=7.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.400000)),SetWeight=0.024000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="SupplyCrate_OceanDrop_Fjordor",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,MaxQuality=1.100000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.900000)),SetWeight=0.015000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="SupplyCrate_IceCaveTier3_Fjordor",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,MaxQuality=1.200000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.500000)),SetWeight=0.190000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="DinoDropInventoryComponent_LavaGolem_jackson",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=3.000000,MaxQuality=7.000000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.300000)),SetWeight=0.022000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="PrimalInventoryBP_GenericFishing",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.400000,RequiresMinQuality=3.000000)),SetWeight=0.001500,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+    - '(SupplyCrateClassString="SupplyCrate_IceCaveTier3",MinItemSets=0,MaxItemSets=1,NumItemSetsPower=0,bSetsRandomWithoutReplacement=True,ItemSets=((SetName="Седло
+      для Кархародонтозавра",ItemEntries=((ItemEntryName="Чертежи: Сёдла",Items=(BlueprintGeneratedClass''/Game/PrimalEarth/CoreBlueprints/Items/Armor/Saddles/PrimalItemArmor_CarchaSaddle.PrimalItemArmor_CarchaSaddle_C''),MinQuantity=1.000000,MinQuality=1.000000,MaxQuality=1.200000,bForceBlueprint=False,ChanceToBeBlueprintOverride=0.500000,ChanceToActuallyGiveItem=0.900000)),SetWeight=0.023000,bItemsRandomWithoutReplacement=True)),bAppendItemSets=True,bAppendPreventIncreasingMinMaxItemSets=False)'
+  bIgnoreStructuresPreventionVolumes: true

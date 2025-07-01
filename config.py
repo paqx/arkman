@@ -69,4 +69,4 @@ _servers = [
     ),
 ]
 
-cfg = Cfg(servers=_servers)
+CFG = Cfg(servers=_servers)
