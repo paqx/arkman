@@ -111,9 +111,8 @@ def _handler_push(args):
 
             for filename in filenames:
                 local_path = os.path.join(local_dir, filename)
-                remote_filename = filename + '.bak'
                 print(
-                    f"- Uploading {local_path} to {remote_dir}/{remote_filename}... ", end="")
+                    f"- Uploading {local_path} to {remote_dir}/{filename}... ", end="")
 
                 if not os.path.isfile(local_path):
                     print(f"Local file does not exist: {local_path}")
@@ -121,7 +120,7 @@ def _handler_push(args):
 
                 try:
                     with open(local_path, "rb") as f:
-                        ftp.storbinary(f"STOR {remote_filename}", f)
+                        ftp.storbinary(f"STOR {filename}", f)
                     print("Success")
                 except Exception as e:
                     print(f"Failed: {e}")
