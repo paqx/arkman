@@ -7,6 +7,7 @@ load_dotenv()
 
 @dataclass
 class Server:
+    """Represents connection credentials of an ARK server"""
     name: str
     host: str
     user: str
@@ -15,6 +16,7 @@ class Server:
 
 @dataclass
 class Cfg:
+    """Configuration container for ARK servers."""
     servers: list[Server]
 
 

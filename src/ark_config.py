@@ -1,6 +1,6 @@
 import re
 from collections import UserDict, defaultdict
-from typing import Union, Self, Literal, Optional, Mapping
+from typing import Union, Self, Literal, Optional
 from os import PathLike, environ
 
 import yaml
@@ -12,6 +12,7 @@ ArkConfigValue = Union[ArkConfigPrimitiveValue, list[ArkConfigPrimitiveValue]]
 class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
     """
     Represents a section of an Ark Survival Evolved configuration file.
+
     This class can handle keys that appear multiple times in a section.
     Each key's value is parsed and stored as one of the following types:
     str, int, float, or bool.
@@ -29,8 +30,9 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
 
     def __setitem__(self, key: str, item):
         """
-        Set an option in the section and ensure it is of an allowed type or 
-        list of allowed types.
+        Set an option in the section.
+
+        Ensures the item is of an allowed type or list of allowed types.
         """
         is_allowed_type = isinstance(item, self.ALLOWED_TYPES)
         is_allowed_list = (
@@ -63,8 +65,8 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
 
     def parse(self, value: str) -> ArkConfigValue:
         """
-        Parse a string value to its respective type (bool, int, float) or 
-        fallbacks to str.
+        Parse a string value to its respective type (bool, int, float), or
+        fall back to str.
         """
         value = value.strip()
 
@@ -83,7 +85,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
         return value
 
     def dump(self) -> str:
-        """Return the section's key-value pairs as INI-formatted string."""
+        """Return the section's key-value pairs as an INI-formatted string."""
         lines = []
 
         for key, item in self.data.items():
@@ -99,6 +101,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
 class ArkConfig:
     """
     A custom INI-style parser for Ark Survival Evolved configuration files.
+
     This parser can handle sections with duplicate keys.
     """
 
@@ -117,20 +120,21 @@ class ArkConfig:
             ArkConfigSection)
 
     def __repr__(self):
-        """Return a string representation."""
+        """Return a string representation of the configuration."""
         config = ', '.join(
             f"{section_name!r}: {section!r}" for section_name, section in self._config.items()
         )
         return f"ArkConfig(encoding={self.encoding!r}, config={{{config}}})"
 
     def __getitem__(self, section_name: str) -> ArkConfigSection:
-        """Get a section by name."""
+        """Return the section by its name."""
         return self._config[section_name]
 
     def __setitem__(self, section_name: str, value):
         """
-        Set a configuration section by name. Accepts either an ArkConfigSection 
-        or dict.
+        Set a configuration section by name.
+
+        Accepts either an ArkConfigSection or a dictionary of options.
         """
         if isinstance(value, ArkConfigSection):
             self._config[section_name] = value
@@ -138,10 +142,16 @@ class ArkConfig:
             self._config[section_name] = ArkConfigSection(value)
         else:
             raise ValueError(
-                "Value must be an ArkConfigSection or a dict of options."
+                "Value must be an ArkConfigSection or a dictionary of options."
             )
 
+    @property
+    def section_names(self) -> list[str]:
+        """Return a list of section names in the configuration."""
+        return list(self._config.keys())
+
     def _expand_env_vars(self):
+        """Expand environment variables in the configuration."""
         for section_name, section in self._config.items():
             for key, value in section.items():
                 if not isinstance(value, str):
@@ -158,9 +168,7 @@ class ArkConfig:
                 self._config[section_name].data[key] = env_value
 
     def sort(self):
-        """
-        Sort each section by keys.
-        """
+        """Sort each section by keys."""
         for section_name, section in self._config.items():
             self._config[section_name] = ArkConfigSection(
                 sorted(section.items()))
@@ -171,6 +179,11 @@ class ArkConfig:
     def read(self, filepath: str | PathLike):
         """
         Read and parse an Ark config INI file.
+
+        Parameters
+        ----------
+        filepath : str or PathLike
+            The path to the INI file to read.
         """
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
@@ -212,14 +225,29 @@ class ArkConfig:
     def write(self, filepath: str | PathLike):
         """
         Dump and write the configuration to an INI file.
+
+        Parameters
+        ----------
+        filepath : str or PathLike
+            The path to the INI file to write.
         """
         with open(filepath, 'w', encoding=self.encoding) as f:
             f.write(self.dump())
 
     def merge(self, other: Self) -> Self:
         """
-        Merge the current configuration with the other. The other takes 
+        Merge the current configuration with another, with the other taking
         precedence for duplicates.
+
+        Parameters
+        ----------
+        other : ArkConfig
+            Another ArkConfig instance to merge with.
+
+        Returns
+        -------
+        ArkConfig
+            A new ArkConfig instance containing the merged configuration.
         """
         merged = ArkConfig()
         section_names = {
@@ -231,7 +259,7 @@ class ArkConfig:
         return merged
 
     def dump(self) -> str:
-        """Return the configuration as an INI string."""
+        """Return the configuration as an INI-formatted string."""
         lines = []
 
         for section_name, section in self._config.items():
@@ -246,13 +274,18 @@ class ArkConfig:
         return {k: dict(v) for k, v in self._config.items()}
 
     def to_yaml(self) -> str:
-        """Return the configuration as a YAML string."""
+        """Return the configuration as a YAML-formatted string."""
         return yaml.safe_dump(
             self.to_dict(), allow_unicode=True, sort_keys=False)
 
     def to_yaml_file(self, filepath: str | PathLike):
         """
-        Convert the configuration to a YAML string and write it to a file.
+        Write the configuration as a YAML-formatted string to a file.
+
+        Parameters
+        ----------
+        filepath : str or PathLike
+            The path to the YAML file to write.
         """
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(self.to_yaml())
@@ -261,6 +294,17 @@ class ArkConfig:
     def from_dict(cls, data: dict[str, dict[str, ArkConfigValue]]) -> Self:
         """
         Create an ArkConfig instance from a nested dictionary structure.
+
+        Parameters
+        ----------
+        data : dict
+            A dictionary where each key is a section name and each value is
+            another dictionary of configuration options.
+
+        Returns
+        -------
+        ArkConfig
+            An instance of ArkConfig created from the provided dictionary.
         """
         config = cls()
 
@@ -273,6 +317,16 @@ class ArkConfig:
     def from_yaml(cls, yaml_text: str) -> Self:
         """
         Create an ArkConfig instance from a YAML string.
+
+        Parameters
+        ----------
+        yaml_text : str
+            A YAML-formatted string representing the configuration.
+
+        Returns
+        -------
+        ArkConfig
+            An instance of ArkConfig created from the provided YAML string.
         """
         data = yaml.safe_load(yaml_text)
 
@@ -287,13 +341,18 @@ class ArkConfig:
     def from_yaml_file(cls, filepath: str | PathLike) -> Self:
         """
         Create an ArkConfig instance from a YAML file.
+
+        Parameters
+        ----------
+        filepath : str or PathLike
+            The path to the YAML file to read.
+
+        Returns
+        -------
+        ArkConfig
+            An instance of ArkConfig created from the provided YAML file.
         """
         with open(filepath, 'r', encoding='utf-8') as f:
             yaml_text = f.read()
 
         return cls.from_yaml(yaml_text)
-
-    @property
-    def section_names(self) -> list[str]:
-        """Return a list of section names in the configuration."""
-        return list(self._config.keys())
