@@ -15,8 +15,8 @@
   BabyFoodConsumptionSpeedMultiplier: 0.25
   GlobalSpoilingTimeMultiplier: 2
   BabyImprintingStatScaleMultiplier: 2.5
-  BabyCuddleIntervalMultiplier: 0.04
-  BabyImprintAmountMultiplier: 100.0
+  BabyCuddleIntervalMultiplier: 0.03
+  BabyImprintAmountMultiplier: 1000.0
   BabyCuddleGracePeriodMultiplier: 10.0
   BabyCuddleLoseImprintQualitySpeedMultiplier: 0.0
   PlayerCharacterFoodDrainMultiplier: 0.5
