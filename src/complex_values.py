@@ -6,6 +6,41 @@ from dataclasses import dataclass, field
 
 @dataclass
 class ItemEntry:
+    """
+    Represents an item entry.
+
+    Parameters
+    ----------
+    EntryWeight : Optional[float]
+        Probability that this item will be chosen (1.0 = 100%).
+    ItemEntryName : Optional[str]
+        Name identifier for this item entry.
+    Items : Optional[list[str]]
+        List of specific item blueprint paths.
+    ItemClassStrings : Optional[list[str]]
+        List of item class names (alternative to Items).
+    ItemsWeights : Optional[list[float]]
+        Weights for individual items when multiple are specified.
+    MinQuantity : float
+        Minimum quantity of this item to spawn (default 1.0).
+    MaxQuantity : float
+        Maximum quantity of this item to spawn (default 1.0).
+    MinQuality : float
+        Minimum quality of this item (default 1.0).
+    MaxQuality : float
+        Maximum quality of this item (default 1.0).
+    bForceBlueprint : bool
+        Whether to always spawn as blueprint (default False).
+    ChanceToBeBlueprintOverride : float
+        Chance to spawn as blueprint when bForceBlueprint is False (default 0.0).
+    ChanceToActuallyGiveItem : Optional[float]
+        Final chance to actually include this item if selected.
+
+    Notes
+    -----
+    Either Items or ItemClassStrings must be specified, but not both.
+    ItemsWeights must match the length of Items or ItemClassStrings if provided.
+    """
     EntryWeight: Optional[float] = None
     ItemEntryName: Optional[str] = None
     Items: Optional[list[str]] = None
@@ -38,6 +73,10 @@ class ItemEntry:
                     "ItemsWeights must have the same length as Items or ItemClassStrings")
 
     def dump(self) -> str:
+        """
+        Return the object as a string suitable for use as a value in ARK server 
+        configuration INI files.
+        """
         parts = []
 
         if self.EntryWeight is not None:
@@ -78,6 +117,30 @@ class ItemEntry:
 
 @dataclass
 class ItemSet:
+    """
+    Represents a set of items that can appear in a supply crate.
+
+    Parameters
+    ----------
+    SetName : Optional[str]
+        Name identifier for this item set.
+    MinNumItems : Optional[int]
+        Minimum number of items to select from this set.
+    MaxNumItems : Optional[int]
+        Maximum number of items to select from this set.
+    NumItemsPower : Optional[float]
+        Quality multiplier (recommended to keep at 1.0).
+    SetWeight : Optional[float]
+        Probability this set will be chosen (1.0 = 100%).
+    bItemsRandomWithoutReplacement : Optional[bool]
+        Whether to prevent duplicate items from this set.
+    ItemEntries : list[ItemEntry]
+        List of possible items in this set.
+
+    Notes
+    -----
+    The actual number of items selected will be between MinNumItems and MaxNumItems.
+    """
     SetName: Optional[str] = None
     MinNumItems: Optional[int] = None
     MaxNumItems: Optional[int] = None
@@ -87,6 +150,10 @@ class ItemSet:
     ItemEntries: list[ItemEntry] = field(default_factory=list)
 
     def dump(self) -> str:
+        """
+        Return the object as a string suitable for use as a value in ARK server 
+        configuration INI files.
+        """
         parts = []
 
         if self.SetName is not None:
@@ -117,10 +184,24 @@ class ItemSet:
 
 @dataclass
 class Quantity:
+    """
+    Represents quantity restrictions for an item class.
+
+    Parameters
+    ----------
+    MaxItemQuantity : int
+        Maximum quantity allowed for this item.
+    bIgnoreMultiplier : bool
+        Whether to ignore global quantity multipliers.
+    """
     MaxItemQuantity: int
     bIgnoreMultiplier: bool
 
     def dump(self) -> str:
+        """
+        Return the object as a string suitable for use as a value in ARK server 
+        configuration INI files.
+        """
         return (
             f"("
             f"MaxItemQuantity={self.MaxItemQuantity},"
@@ -131,6 +212,28 @@ class Quantity:
 
 @dataclass
 class ConfigOverrideSupplyCrateItems:
+    """
+    Configuration override for supply crate items.
+
+    Parameters
+    ----------
+    SupplyCrateClassString : str
+        Class name of the supply crate to modify (e.g., "SupplyCrate_Level03_C").
+    MinItemSets : int
+        Minimum number of item sets to include.
+    MaxItemSets : int
+        Maximum number of item sets to include.
+    NumItemSetsPower : float
+        Quality multiplier (recommended to keep at 1.0).
+    bSetsRandomWithoutReplacement : bool
+        Whether to prevent duplicate sets.
+    ItemSets : list[ItemSet]
+        List of possible item sets for this crate.
+    bAppendItemSets : Optional[bool]
+        Whether to append to existing sets instead of replacing.
+    bAppendPreventIncreasingMinMaxItemSets : Optional[bool]
+        Whether to prevent increasing min/max when appending.
+    """
     SupplyCrateClassString: str
     MinItemSets: int
     MaxItemSets: int
@@ -141,6 +244,10 @@ class ConfigOverrideSupplyCrateItems:
     bAppendPreventIncreasingMinMaxItemSets: Optional[bool] = None
 
     def dump(self) -> str:
+        """
+        Return the object as a string suitable for use as a value in ARK server 
+        configuration INI files.
+        """
         parts = [
             f'SupplyCrateClassString="{self.SupplyCrateClassString}"',
             f"MinItemSets={self.MinItemSets}",
@@ -166,10 +273,24 @@ class ConfigOverrideSupplyCrateItems:
 
 @dataclass
 class ConfigOverrideItemMaxQuantity:
+    """
+    Configuration override for maximum item quantities.
+
+    Parameters
+    ----------
+    ItemClassString : str
+        Class name of the item to modify (e.g., "PrimalItemResource_Stone_C").
+    Quantity : Quantity
+        Quantity restrictions for this item.
+    """
     ItemClassString: str
     Quantity: Quantity
 
     def dump(self) -> str:
+        """
+        Return the object as a string suitable for use as a value in ARK server 
+        configuration INI files.
+        """
         quantity = self.Quantity.dump()
         return (
             f"("
