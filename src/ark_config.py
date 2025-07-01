@@ -172,7 +172,7 @@ class ArkConfigSection(UserDict[str, Optional[ArkConfigValue]]):
             else:
                 lines.append(f'{key}={item}')
 
-        return '\r\n'.join(lines)
+        return '\n'.join(lines)
 
 
 class ArkConfig:
@@ -302,7 +302,7 @@ class ArkConfig:
         filepath : str or PathLike
             The path to the INI file to write.
         """
-        with open(filepath, 'w', encoding=self.encoding) as f:
+        with open(filepath, 'w', encoding=self.encoding, newline='\r\n') as f:
             f.write(self.dump())
 
     def merge(self, other: Self) -> Self:
@@ -339,7 +339,7 @@ class ArkConfig:
             lines.append(section.dump())
             lines.append('')
 
-        return '\r\n'.join(lines)
+        return '\n'.join(lines)
 
     def to_dict(self) -> dict[str, dict[str, ArkConfigValue]]:
         """Return the configuration as a nested dictionary."""
