@@ -27,6 +27,7 @@ LAST_SAVE_RE = re.compile(LAST_SAVE_PATTERN, re.IGNORECASE)
 
 
 def ftp_mlsd_list(ftp: ftplib.FTP) -> dict[str, dict]:
+    """Return a dict of files and their facts from FTP MLSD listing."""
     files = {}
 
     for name, facts in ftp.mlsd():
@@ -37,6 +38,7 @@ def ftp_mlsd_list(ftp: ftplib.FTP) -> dict[str, dict]:
 
 
 def should_fetch(local_dir: str, filename: str, facts: dict[str, str]):
+    """Decide whether a remote file should be fetched and backed up."""
     if not EXT_RE.search(filename):
         return False
 
@@ -59,6 +61,7 @@ def should_fetch(local_dir: str, filename: str, facts: dict[str, str]):
 
 
 def get_mtime_from_facts(facts: dict[str, str]) -> float:
+    """Extract and return modification time from MLSD facts as a timestamp."""
     return datetime.strptime(facts["modify"][:14], "%Y%m%d%H%M%S").timestamp()
 
 
@@ -94,6 +97,10 @@ def gzip_data(
 
 
 def make(args):
+    """
+    Download files from remote servers via FTP and store local compressed 
+    copies.
+    """
     for server in get_servers(args.servers):
         print("=" * 60)
         print(f"Back up server: {server.name} ({server.host})")
