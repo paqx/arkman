@@ -10,6 +10,10 @@
   Quantity:
     MaxItemQuantity: 1000
     bIgnoreMultiplier: true
+- ItemClassString: PrimalItemResource_Ambergris_C
+  Quantity:
+    MaxItemQuantity: 50
+    bIgnoreMultiplier: true
 - ItemClassString: PrimalItemAmmo_ArrowFlame_C
   Quantity:
     MaxItemQuantity: 500
@@ -138,6 +142,10 @@
   Quantity:
     MaxItemQuantity: 300
     bIgnoreMultiplier: true
+- ItemClassString: PrimalItemConsumable_JellyVenom_C
+  Quantity:
+    MaxItemQuantity: 1000
+    bIgnoreMultiplier: true
 - ItemClassString: PrimalItemConsumable_Mushroom_Aquatic_C
   Quantity:
     MaxItemQuantity: 2000
@@ -198,7 +206,7 @@
   Quantity:
     MaxItemQuantity: 1000
     bIgnoreMultiplier: true
-- ItemClassString: PrimalItemConsumable_Veggie_Longgrass_C
+- ItemClassString: PrimalItemConsumable_Veggie_Longrass_C
   Quantity:
     MaxItemQuantity: 1000
     bIgnoreMultiplier: true
@@ -222,6 +230,10 @@
   Quantity:
     MaxItemQuantity: 50
     bIgnoreMultiplier: true
+- ItemClassString: PrimalItemResource_AnglerGel_C
+  Quantity:
+    MaxItemQuantity: 1000
+    bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_BlackPearl_C
   Quantity:
     MaxItemQuantity: 1000
@@ -232,7 +244,7 @@
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_Charcoal_C
   Quantity:
-    MaxItemQuantity: 1000
+    MaxItemQuantity: 2000
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_Chitin_C
   Quantity:
@@ -250,6 +262,10 @@
   Quantity:
     MaxItemQuantity: 2000
     bIgnoreMultiplier: true
+- ItemClassString: PrimalItemResource_CondensedGas_C
+  Quantity:
+    MaxItemQuantity: 1000
+    bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_CorruptedPolymer_C
   Quantity:
     MaxItemQuantity: 1000
@@ -262,7 +278,7 @@
   Quantity:
     MaxItemQuantity: 1000
     bIgnoreMultiplier: true
-- ItemClassString: PrimalItemResource_Crystal_Primal_C
+- ItemClassString: PrimalItemResource_Crystal_IslesPrimal_C
   Quantity:
     MaxItemQuantity: 50
     bIgnoreMultiplier: true
@@ -273,6 +289,10 @@
 - ItemClassString: PrimalItemResource_Element_C
   Quantity:
     MaxItemQuantity: 1000
+    bIgnoreMultiplier: true
+- ItemClassString: PrimalItemResource_ElementDust_C
+  Quantity:
+    MaxItemQuantity: 10000
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_ElementShard_C
   Quantity:
@@ -316,7 +336,7 @@
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_Gunpowder_C
   Quantity:
-    MaxItemQuantity: 2500
+    MaxItemQuantity: 3000
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_Hide_C
   Quantity:
@@ -328,7 +348,7 @@
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_Metal_C
   Quantity:
-    MaxItemQuantity: 2000
+    MaxItemQuantity: 3000
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_MetalIngot_C
   Quantity:
@@ -392,7 +412,7 @@
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_Silicon_C
   Quantity:
-    MaxItemQuantity: 500
+    MaxItemQuantity: 1000
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_Silk_C
   Quantity:
@@ -412,7 +432,7 @@
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_Stone_C
   Quantity:
-    MaxItemQuantity: 1000
+    MaxItemQuantity: 3000
     bIgnoreMultiplier: true
 - ItemClassString: PrimalItemResource_Sulfur_C
   Quantity:
