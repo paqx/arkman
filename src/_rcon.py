@@ -6,8 +6,10 @@ from ._utils import get_servers
 
 def list_players(args):
     """
-    List players who are currently connected to servers.
+    List players who are currently connected to servers and print totals.
     """
+    total_players = 0
+
     for server in get_servers(args.servers):
         ark_rcon = ArkRcon(server)
 
@@ -15,6 +17,9 @@ def list_players(args):
         print(f"Listing players: {server.name} ({server.host})")
         print("=" * 60)
         players = ark_rcon.list_players()
+
+        num_players = len(players)
+        total_players += num_players
 
         if players:
             table = PrettyTable()
@@ -24,9 +29,12 @@ def list_players(args):
                 table.add_row([player.name, player.steam_id])
 
             print(table)
-            print('')
+            print(f'Total players on this server: {num_players}\n')
         else:
             print("No players currently connected.\n")
+
+    print("=" * 60)
+    print(f"Total players on all servers: {total_players}\n")
 
 
 def broadcast(args):
