@@ -13,7 +13,7 @@ from .section import ArkConfigSection
 
 class ArkConfig:
     """
-    A custom INI-style parser for Ark Survival Evolved configuration files.
+    A custom INI-style parser for ARK configuration files.
 
     This parser can handle sections with duplicate keys.
     """
