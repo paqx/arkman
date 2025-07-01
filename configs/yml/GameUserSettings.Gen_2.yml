@@ -20,7 +20,7 @@ ServerSettings:
   ServerCrosshair: true
   ServerPassword: ""
   ServerAdminPassword: ${GEN_2_SERVER_ADMIN_PASS}
-  RCONPort: 29170
+  RCONPort: ${GEN_2_RCON_PORT}
   TributeItemExpirationSeconds: 432000
   TributeDinoExpirationSeconds: 432000
   TributeCharacterExpirationSeconds: 432000
