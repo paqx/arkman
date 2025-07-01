@@ -1,7 +1,7 @@
 import re
 from collections import UserDict, defaultdict
 from typing import Union, Self, Literal, Optional
-from os import PathLike, environ
+from os import PathLike, environ, path
 
 import yaml
 
@@ -142,7 +142,7 @@ class ArkConfig:
             self._config[section_name] = ArkConfigSection(value)
         else:
             raise ValueError(
-                "Value must be an ArkConfigSection or a dictionary of options."
+                f"Value must be an ArkConfigSection or a dictionary of options, not {type(value)}."
             )
 
     @property
@@ -166,15 +166,6 @@ class ArkConfig:
                 env_key = env_match.group('env')
                 env_value = environ[env_key]
                 self._config[section_name].data[key] = env_value
-
-    def sort(self):
-        """Sort each section by keys."""
-        for section_name, section in self._config.items():
-            self._config[section_name] = ArkConfigSection(
-                sorted(section.items()))
-
-        sorted_config = sorted(self._config.items())
-        self._config = defaultdict(self._config.default_factory, sorted_config)
 
     def read(self, filepath: str | PathLike):
         """
@@ -328,6 +319,8 @@ class ArkConfig:
         ArkConfig
             An instance of ArkConfig created from the provided YAML string.
         """
+        yaml.add_constructor(
+            '!include', cls._include_constructor, Loader=yaml.SafeLoader)
         data = yaml.safe_load(yaml_text)
 
         if not isinstance(data, dict):
@@ -356,3 +349,17 @@ class ArkConfig:
             yaml_text = f.read()
 
         return cls.from_yaml(yaml_text)
+
+    @staticmethod
+    def _include_constructor(loader, node):
+        """Handle !include statements in YAML."""
+        include_filename = loader.construct_scalar(node)
+        include_path = path.join(
+            './configs/yml/includes', include_filename)
+
+        if not path.isfile(include_path):
+            raise FileNotFoundError(
+                f"Include file does not exist: {include_path}")
+
+        with open(include_path, 'r') as f:
+            return yaml.safe_load(f)
