@@ -103,6 +103,6 @@
 - (ItemClassString="PrimalItemResource_SquidOil_C",Quantity=(MaxItemQuantity=2500,bIgnoreMultiplier=true))
 - (ItemClassString="PrimalItemResource_Stone_C",Quantity=(MaxItemQuantity=1000,bIgnoreMultiplier=true))
 - (ItemClassString="PrimalItemResource_Sulfur_C",Quantity=(MaxItemQuantity=1000,bIgnoreMultiplier=true))
-- (ItemClassString="PrimalItemResource_Thatch_C",Quantity=(MaxItemQuantity=2000,bIgnoreMultiplier=true))
+- (ItemClassString="PrimalItemResource_Thatch_C",Quantity=(MaxItemQuantity=3000,bIgnoreMultiplier=true))
 - (ItemClassString="PrimalItemResource_Wood_C",Quantity=(MaxItemQuantity=1000,bIgnoreMultiplier=true))
 - (ItemClassString="PrimalItemResource_Wool_C",Quantity=(MaxItemQuantity=1000,bIgnoreMultiplier=true))
