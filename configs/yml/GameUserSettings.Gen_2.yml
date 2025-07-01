@@ -48,6 +48,8 @@ ServerSettings:
   StructurePickupTimeAfterPlacement: 30.0
   GlobalVoiceChat: true
   ForceAllStructureLocking: true
+  AdjustableMutagenSpawnDelayMultiplier: 0.25
+  MaxHexagonsPerCharacter: 5000000
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
 MessageOfTheDay:
