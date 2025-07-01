@@ -91,7 +91,7 @@ class ItemEntry(ComplexValue):
 
         if self.ItemClassStrings is not None:
             item_class_strings = ",".join(
-                f"'{s}'" for s in self.ItemClassStrings)
+                f'"{s}"' for s in self.ItemClassStrings)
             parts.append(f'ItemClassStrings=({item_class_strings})')
 
         if self.ItemsWeights is not None:
@@ -202,9 +202,9 @@ class ItemSet(ComplexValue):
         List of possible items in this set.
     SetWeight : Optional[float]
         Probability this set will be chosen (1.0 = 100%).
-    MinNumItems : Optional[float]
+    MinNumItems : Optional[int]
         Minimum number of items to select from this set.
-    MaxNumItems : Optional[float]
+    MaxNumItems : Optional[int]
         Maximum number of items to select from this set.
     NumItemsPower : Optional[float]
         Quality multiplier (recommended to keep at 1.0).
@@ -218,8 +218,8 @@ class ItemSet(ComplexValue):
     SetName: Optional[str] = None
     ItemEntries: Optional[list[ItemEntry]] = field(default_factory=list)
     SetWeight: Optional[float] = None
-    MinNumItems: Optional[float] = None
-    MaxNumItems: Optional[float] = None
+    MinNumItems: Optional[int] = None
+    MaxNumItems: Optional[int] = None
     NumItemsPower: Optional[float] = None
     bItemsRandomWithoutReplacement: Optional[bool] = None
 
@@ -237,10 +237,10 @@ class ItemSet(ComplexValue):
             parts.append(f"SetWeight={self.SetWeight:.6f}")
 
         if self.MinNumItems is not None:
-            parts.append(f"MinNumItems={self.MinNumItems:.6f}")
+            parts.append(f"MinNumItems={self.MinNumItems}")
 
         if self.MaxNumItems is not None:
-            parts.append(f"MaxNumItems={self.MaxNumItems:.6f}")
+            parts.append(f"MaxNumItems={self.MaxNumItems}")
 
         if self.NumItemsPower is not None:
             parts.append(f"NumItemsPower={self.NumItemsPower:.6f}")
