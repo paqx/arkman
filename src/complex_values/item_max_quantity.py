@@ -23,10 +23,10 @@ class Quantity(ComplexValue):
 
     def __str__(self) -> str:
         return (
-            f"("
+            "("
             f"MaxItemQuantity={self.MaxItemQuantity},"
             f"bIgnoreMultiplier={self.bIgnoreMultiplier}"
-            f")"
+            ")"
         )
 
     @classmethod
@@ -54,10 +54,10 @@ class ConfigOverrideItemMaxQuantity(ComplexValue):
 
     def __str__(self) -> str:
         return (
-            f"("
+            "("
             f'ItemClassString="{self.ItemClassString}",'
             f"Quantity={self.Quantity}"
-            f")"
+            ")"
         )
 
     @classmethod
