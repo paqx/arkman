@@ -1,4 +1,5 @@
 /script/shootergame.shootergamemode:
+  bPassiveDefensesDamageRiderlessDinos: true
   bAllowUnlimitedRespecs: true
   bUseCorpseLocator: true
   bDisableStructurePlacementCollision: true
