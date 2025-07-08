@@ -40,4 +40,3 @@
   PerLevelStatsMultiplier_DinoTamed[7]: 2.75
   UseCorpseLifeSpanMultiplier: 4.0
   BaseHexagonRewardMultiplier: 2.0
-  ConfigOverrideSupplyCrateItems: !include events/SummerAlfaFest2025.yml

@@ -58,8 +58,6 @@ ServerSettings:
   PlayerCharacterWaterDrainMultiplier: 0.5
   DinoCharacterHealthRecoveryMultiplier: 2.0
   PreventSpawnAnimations: true
-  ActiveEvent: Summer
-  EventColorsChanceOverride: 0.7
 MessageOfTheDay:
   Message: ${MOTD}
   Duration: 45

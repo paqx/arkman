@@ -40,4 +40,3 @@
   PerLevelStatsMultiplier_DinoTamed[7]: 2.75
   UseCorpseLifeSpanMultiplier: 4.0
   ConfigAddNPCSpawnEntriesContainer: !include ConfigAddNPCSpawnEntriesContainer.Extinction.yml
-  ConfigOverrideSupplyCrateItems: !include events/SummerAlfaFest2025.yml
