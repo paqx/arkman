@@ -1,0 +1,41 @@
+/script/shootergame.shootergamemode:
+  bPassiveDefensesDamageRiderlessDinos: true
+  bAllowUnlimitedRespecs: true
+  bUseCorpseLocator: true
+  bDisableStructurePlacementCollision: true
+  FuelConsumptionIntervalMultiplier: 2.0
+  TamedDinoTorporDrainMultiplier: 2.0
+  StructureDamageRepairCooldown: 0.0
+  CropDecaySpeedMultiplier: 5.0
+  CropGrowthSpeedMultiplier: 5.0
+  LayEggIntervalMultiplier: 0.2
+  MatingIntervalMultiplier: 0.1
+  MatingSpeedMultiplier: 5.0
+  EggHatchSpeedMultiplier: 5.0
+  BabyMatureSpeedMultiplier: 10.0
+  BabyFoodConsumptionSpeedMultiplier: 0.25
+  GlobalSpoilingTimeMultiplier: 2.0
+  BabyImprintingStatScaleMultiplier: 2.5
+  BabyCuddleIntervalMultiplier: 0.03
+  BabyImprintAmountMultiplier: 10000.0
+  BabyCuddleGracePeriodMultiplier: 10.0
+  BabyCuddleLoseImprintQualitySpeedMultiplier: 0.0
+  PlayerCharacterFoodDrainMultiplier: 0.5
+  PlayerCharacterWaterDrainMultiplier: 0.5
+  SupplyCrateLootQualityMultiplier: 1.5
+  OverridePlayerLevelEngramPoints: !include OverridePlayerLevelEngramPoints.yml
+  ConfigOverrideItemMaxQuantity: !include ConfigOverrideItemMaxQuantity.yml
+  PerLevelStatsMultiplier_Player[0]: 2.0
+  PerLevelStatsMultiplier_Player[1]: 2.0
+  PerLevelStatsMultiplier_Player[2]: 2.0
+  PerLevelStatsMultiplier_Player[3]: 2.0
+  PerLevelStatsMultiplier_Player[4]: 2.0
+  PerLevelStatsMultiplier_Player[5]: 2.0
+  PerLevelStatsMultiplier_Player[6]: 2.0
+  PerLevelStatsMultiplier_Player[7]: 5.0
+  PerLevelStatsMultiplier_Player[8]: 2.0
+  PerLevelStatsMultiplier_Player[9]: 2.0
+  PerLevelStatsMultiplier_Player[10]: 2.0
+  PerLevelStatsMultiplier_Player[11]: 2.0
+  PerLevelStatsMultiplier_DinoTamed[7]: 2.75
+  UseCorpseLifeSpanMultiplier: 4.0

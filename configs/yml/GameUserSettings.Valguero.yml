@@ -19,8 +19,8 @@ ServerSettings:
   AllowThirdPersonPlayer: true
   ServerCrosshair: true
   ServerPassword: ""
-  ServerAdminPassword: ${FJORDUR_SERVER_ADMIN_PASS}
-  RCONPort: ${FJORDUR_RCON_PORT}
+  ServerAdminPassword: ${VALGUERO_SERVER_ADMIN_PASS}
+  RCONPort: ${VALGUERO_RCON_PORT}
   TributeItemExpirationSeconds: 432000
   TributeDinoExpirationSeconds: 432000
   TributeCharacterExpirationSeconds: 432000
@@ -55,7 +55,6 @@ ServerSettings:
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
   DinoCharacterHealthRecoveryMultiplier: 2.0
-  AllowCaveBuildingPvE: true
 MessageOfTheDay:
   Message: ${MOTD}
   Duration: 45
@@ -201,7 +200,7 @@ ScalabilityGroups:
   sg.HeightFieldShadowQuality: 3
   sg.GroundClutterRadius: 10000
 SessionSettings:
-  SessionName: ${FJORDUR_SESSION_NAME}
+  SessionName: ${VALGUERO_SESSION_NAME}
 /Script/Engine.GameSession:
   MaxPlayers: 30
 /Game/PrimalEarth/CoreBlueprints/TestGameMode.TestGameMode_C:

@@ -5,7 +5,7 @@ ServerSettings:
   OverrideOfficialDifficulty: 5.0
   ShowFloatingDamageText: true
   serverPVE: true
-  noTributeDownloads: false
+  NoTributeDownloads: false
   AllowFlyerCarryPvE: true
   DinoCharacterFoodDrainMultiplier: 2.0
   AllowAnyoneBabyImprintCuddle: true
