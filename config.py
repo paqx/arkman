@@ -98,6 +98,15 @@ _servers = [
         id_=os.environ.get("RAGNAROK_SERVER_ID"),
     ),
     Server(
+        name="Scorched_Earth",
+        host=os.environ["SCORCHED_EARTH_HOST"],
+        user=os.environ["SCORCHED_EARTH_USER"],
+        password=os.environ["SCORCHED_EARTH_PASS"],
+        admin_password=os.environ["SCORCHED_EARTH_SERVER_ADMIN_PASS"],
+        rcon_port=int(os.environ["SCORCHED_EARTH_RCON_PORT"]),
+        id_=os.environ.get("SCORCHED_EARTH_SERVER_ID"),
+    ),
+    Server(
         name="Valguero",
         host=os.environ["VALGUERO_HOST"],
         user=os.environ["VALGUERO_USER"],
