@@ -86,6 +86,14 @@ def main():
         '-s', '--servers', nargs='+', choices=server_names)
     parser_list_players.set_defaults(func=_rcon.list_players)
 
+    # kick player command
+    parser_kick_player = rcon_subparsers.add_parser(
+        'kick_player', help='Kick player from a server')
+    parser_kick_player.add_argument(
+        '-s', '--server', choices=server_names, required=True)
+    parser_kick_player.add_argument('-i', '--steam_id', required=True)
+    parser_kick_player.set_defaults(func=_rcon.kick_player)
+
     # broadcast command
     parser_broadcast = rcon_subparsers.add_parser(
         'broadcast', help='Broadcast a message to all players on the server'

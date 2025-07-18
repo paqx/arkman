@@ -1,4 +1,5 @@
 from prettytable import PrettyTable
+from rcon.exceptions import EmptyResponse
 
 from src.ark_rcon import ArkRcon
 from ._utils import get_servers
@@ -16,7 +17,12 @@ def list_players(args):
         print("=" * 60)
         print(f"Listing players: {server.name} ({server.host})")
         print("=" * 60)
-        players = ark_rcon.list_players()
+
+        try:
+            players = ark_rcon.list_players()
+        except EmptyResponse:
+            print('Failed to execute RCON command.\n')
+            continue
 
         num_players = len(players)
         total_players += num_players
@@ -37,6 +43,27 @@ def list_players(args):
     print(f"Total players on all servers: {total_players}\n")
 
 
+def kick_player(args):
+    """
+    Kick a player from a server.
+    """
+    servers = get_servers(args.server)
+
+    if not servers:
+        print(f'Incorrect server name: {args.server}')
+        return
+
+    ark_rcon = ArkRcon(servers[0])
+    print(f"Kicking player {args.steam_id} from {servers[0].name})")
+
+    try:
+        response = ark_rcon.kick_player(args.steam_id)
+    except EmptyResponse:
+        print('Failed to execute RCON command.\n')
+
+    print(f"Result: {response}")
+
+
 def broadcast(args):
     """
     Broadcast a message to all players on the servers.
@@ -49,10 +76,15 @@ def broadcast(args):
     for server in get_servers(args.servers):
         ark_rcon = ArkRcon(server)
 
+        try:
+            response = ark_rcon.broadcast(message)
+        except EmptyResponse:
+            print('Failed to execute RCON command.\n')
+            continue
+
         print("=" * 60)
         print(f"Broadcasting to: {server.name} ({server.host})")
         print("=" * 60)
-        response = ark_rcon.broadcast(message)
         print(response)
         print('')
 
@@ -64,10 +96,15 @@ def save_world(args):
     for server in get_servers(args.servers):
         ark_rcon = ArkRcon(server)
 
+        try:
+            response = ark_rcon.save_world()
+        except EmptyResponse:
+            print('Failed to execute RCON command.\n')
+            continue
+
         print("=" * 60)
         print(f"Saving world on: {server.name} ({server.host})")
         print("=" * 60)
-        response = ark_rcon.save_world()
         print(response)
         print('')
 
@@ -79,11 +116,15 @@ def kick_all_players(args):
     for server in get_servers(args.servers):
         ark_rcon = ArkRcon(server)
 
+        try:
+            results = ark_rcon.kick_all_players()
+        except EmptyResponse:
+            print('Failed to execute RCON command.\n')
+            continue
+
         print("=" * 60)
         print(f"Kicking all players on: {server.name} ({server.host})")
         print("=" * 60)
-
-        results = ark_rcon.kick_all_players()
 
         if results:
             for player, response in results:
