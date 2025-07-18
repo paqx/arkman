@@ -4,8 +4,6 @@
   bUseCorpseLocator: true
   bDisableStructurePlacementCollision: true
   FuelConsumptionIntervalMultiplier: 2.0
-  TamedDinoTorporDrainMultiplier: 2.0
-  StructureDamageRepairCooldown: 0.0
   CropDecaySpeedMultiplier: 5.0
   CropGrowthSpeedMultiplier: 5.0
   LayEggIntervalMultiplier: 0.2
@@ -22,10 +20,11 @@
   BabyCuddleLoseImprintQualitySpeedMultiplier: 0.0
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
+  SupplyCrateLootQualityMultiplier: 3.5
   OverridePlayerLevelEngramPoints: !include OverridePlayerLevelEngramPoints.yml
   ConfigOverrideItemMaxQuantity: !include ConfigOverrideItemMaxQuantity.yml
   # 0 - Health
-  PerLevelStatsMultiplier_Player[0]: 2.0
+  PerLevelStatsMultiplier_Player[0]: 1.0
   # 1 - Stamina / Charge Capacity
   PerLevelStatsMultiplier_Player[1]: 2.0
   # 2 - Torpidity
@@ -39,16 +38,15 @@
   # 6 - Temperature
   PerLevelStatsMultiplier_Player[6]: 2.0
   # 7 - Weight
-  PerLevelStatsMultiplier_Player[7]: 5.0
+  PerLevelStatsMultiplier_Player[7]: 6.0
   # 8 - Melee Damage / Charge Emission Range
-  PerLevelStatsMultiplier_Player[8]: 2.0
+  PerLevelStatsMultiplier_Player[8]: 1.0
   # 9 - Movement Speed / Maewing's Nursing Effectiveness
-  PerLevelStatsMultiplier_Player[9]: 2.0
+  PerLevelStatsMultiplier_Player[9]: 1.0
   # 10 - Fortitude
   PerLevelStatsMultiplier_Player[10]: 2.0
   # 11 - Crafting Skill
   PerLevelStatsMultiplier_Player[11]: 2.0
   # 7 - Weight
-  PerLevelStatsMultiplier_DinoTamed[7]: 2.75
+  PerLevelStatsMultiplier_DinoTamed[7]: 3.5
   UseCorpseLifeSpanMultiplier: 4.0
-  BaseHexagonRewardMultiplier: 1.5

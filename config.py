@@ -1,7 +1,8 @@
 import os
 from dataclasses import dataclass
-from dotenv import load_dotenv
 from typing import Optional
+
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -24,98 +25,22 @@ class Cfg:
     servers: list[Server]
 
 
-_servers = [
-    Server(
-        name="Aberration",
-        host=os.environ["ABERRATION_HOST"],
-        user=os.environ["ABERRATION_USER"],
-        password=os.environ["ABERRATION_PASS"],
-        admin_password=os.environ["ABERRATION_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["ABERRATION_RCON_PORT"]),
-        id_=os.environ.get("ABERRATION_SERVER_ID"),
-    ),
-    Server(
-        name="Crystal_Isles",
-        host=os.environ["CRYSTAL_ISLES_HOST"],
-        user=os.environ["CRYSTAL_ISLES_USER"],
-        password=os.environ["CRYSTAL_ISLES_PASS"],
-        admin_password=os.environ["CRYSTAL_ISLES_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["CRYSTAL_ISLES_RCON_PORT"]),
-        id_=os.environ.get("CRYSTAL_ISLES_SERVER_ID"),
-    ),
-    Server(
-        name="Extinction",
-        host=os.environ["EXTINCTION_HOST"],
-        user=os.environ["EXTINCTION_USER"],
-        password=os.environ["EXTINCTION_PASS"],
-        admin_password=os.environ["EXTINCTION_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["EXTINCTION_RCON_PORT"]),
-        id_=os.environ.get("EXTINCTION_SERVER_ID"),
-    ),
-    Server(
-        name="Fjordur",
-        host=os.environ["FJORDUR_HOST"],
-        user=os.environ["FJORDUR_USER"],
-        password=os.environ["FJORDUR_PASS"],
-        admin_password=os.environ["FJORDUR_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["FJORDUR_RCON_PORT"]),
-        id_=os.environ.get("FJORDUR_SERVER_ID"),
-    ),
-    Server(
-        name="Gen_1",
-        host=os.environ["GEN_1_HOST"],
-        user=os.environ["GEN_1_USER"],
-        password=os.environ["GEN_1_PASS"],
-        admin_password=os.environ["GEN_1_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["GEN_1_RCON_PORT"]),
-        id_=os.environ.get("GEN_1_SERVER_ID"),
-    ),
-    Server(
-        name="Gen_2",
-        host=os.environ["GEN_2_HOST"],
-        user=os.environ["GEN_2_USER"],
-        password=os.environ["GEN_2_PASS"],
-        admin_password=os.environ["GEN_2_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["GEN_2_RCON_PORT"]),
-        id_=os.environ.get("GEN_2_SERVER_ID"),
-    ),
-    Server(
-        name="Island",
-        host=os.environ["ISLAND_HOST"],
-        user=os.environ["ISLAND_USER"],
-        password=os.environ["ISLAND_PASS"],
-        admin_password=os.environ["ISLAND_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["ISLAND_RCON_PORT"]),
-        id_=os.environ.get("ISLAND_SERVER_ID"),
-    ),
-    Server(
-        name="Ragnarok",
-        host=os.environ["RAGNAROK_HOST"],
-        user=os.environ["RAGNAROK_USER"],
-        password=os.environ["RAGNAROK_PASS"],
-        admin_password=os.environ["RAGNAROK_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["RAGNAROK_RCON_PORT"]),
-        id_=os.environ.get("RAGNAROK_SERVER_ID"),
-    ),
-    Server(
-        name="Scorched_Earth",
-        host=os.environ["SCORCHED_EARTH_HOST"],
-        user=os.environ["SCORCHED_EARTH_USER"],
-        password=os.environ["SCORCHED_EARTH_PASS"],
-        admin_password=os.environ["SCORCHED_EARTH_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["SCORCHED_EARTH_RCON_PORT"]),
-        id_=os.environ.get("SCORCHED_EARTH_SERVER_ID"),
-    ),
-    Server(
-        name="Valguero",
-        host=os.environ["VALGUERO_HOST"],
-        user=os.environ["VALGUERO_USER"],
-        password=os.environ["VALGUERO_PASS"],
-        admin_password=os.environ["VALGUERO_SERVER_ADMIN_PASS"],
-        rcon_port=int(os.environ["VALGUERO_RCON_PORT"]),
-        id_=os.environ.get("VALGUERO_SERVER_ID"),
-    ),
-]
+_server_names = os.environ["SERVER_NAMES"].split(',')
+_servers = []
+
+for server_name in _server_names:
+    name = server_name.strip()
+    name_uc = name.upper()
+
+    _servers.append(Server(
+        name=name,
+        host=os.environ[f"{name_uc}_HOST"],
+        user=os.environ[f"{name_uc}_USER"],
+        password=os.environ[f"{name_uc}_PASS"],
+        admin_password=os.environ[f"{name_uc}_SERVER_ADMIN_PASS"],
+        rcon_port=int(os.environ[f"{name_uc}_RCON_PORT"]),
+        id_=os.environ.get(f"{name_uc}_SERVER_ID"),
+    ))
 
 CFG = Cfg(servers=_servers)
 
