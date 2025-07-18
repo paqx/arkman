@@ -21,6 +21,7 @@
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
   SupplyCrateLootQualityMultiplier: 3.5
+  MaxNumberOfPlayersInTribe: 3
   OverridePlayerLevelEngramPoints: !include OverridePlayerLevelEngramPoints.yml
   ConfigOverrideItemMaxQuantity: !include ConfigOverrideItemMaxQuantity.yml
   # 0 - Health

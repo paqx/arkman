@@ -47,6 +47,7 @@ ServerSettings:
   PlayerCharacterFoodDrainMultiplier: 0.5
   PlayerCharacterWaterDrainMultiplier: 0.5
   DinoCharacterHealthRecoveryMultiplier: 2.0
+  EnablePvPGamma: true
 MessageOfTheDay:
   Message: ${MOTD_PVP}
   Duration: 45
