@@ -12,13 +12,12 @@ def list_players(args):
     total_players = 0
 
     for server in get_servers(args.servers):
-        ark_rcon = ArkRcon(server)
-
         print("=" * 60)
         print(f"Listing players: {server.name} ({server.host})")
         print("=" * 60)
 
         try:
+            ark_rcon = ArkRcon(server)
             players = ark_rcon.list_players()
         except EmptyResponse:
             print('Failed to execute RCON command.\n')
@@ -53,10 +52,10 @@ def kick_player(args):
         print(f'Incorrect server name: {args.server}')
         return
 
-    ark_rcon = ArkRcon(servers[0])
     print(f"Kicking player {args.steam_id} from {servers[0].name})")
 
     try:
+        ark_rcon = ArkRcon(servers[0])
         response = ark_rcon.kick_player(args.steam_id)
     except EmptyResponse:
         print('Failed to execute RCON command.\n')
@@ -74,9 +73,8 @@ def broadcast(args):
         message = args.message
 
     for server in get_servers(args.servers):
-        ark_rcon = ArkRcon(server)
-
         try:
+            ark_rcon = ArkRcon(server)
             response = ark_rcon.broadcast(message)
         except EmptyResponse:
             print('Failed to execute RCON command.\n')
@@ -94,9 +92,8 @@ def save_world(args):
     Save the world on the servers.
     """
     for server in get_servers(args.servers):
-        ark_rcon = ArkRcon(server)
-
         try:
+            ark_rcon = ArkRcon(server)
             response = ark_rcon.save_world()
         except EmptyResponse:
             print('Failed to execute RCON command.\n')
@@ -114,9 +111,8 @@ def kick_all_players(args):
     Kick all players from the servers.
     """
     for server in get_servers(args.servers):
-        ark_rcon = ArkRcon(server)
-
         try:
+            ark_rcon = ArkRcon(server)
             results = ark_rcon.kick_all_players()
         except EmptyResponse:
             print('Failed to execute RCON command.\n')
