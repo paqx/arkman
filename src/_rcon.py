@@ -19,6 +19,9 @@ def list_players(args):
         try:
             ark_rcon = ArkRcon(server)
             players = ark_rcon.list_players()
+        except ConnectionRefusedError:
+            print('Connection refused.\n')
+            continue
         except EmptyResponse:
             print('Failed to execute RCON command.\n')
             continue
@@ -57,6 +60,8 @@ def kick_player(args):
     try:
         ark_rcon = ArkRcon(servers[0])
         response = ark_rcon.kick_player(args.steam_id)
+    except ConnectionRefusedError:
+        print('Connection refused.\n')
     except EmptyResponse:
         print('Failed to execute RCON command.\n')
 
@@ -76,6 +81,9 @@ def broadcast(args):
         try:
             ark_rcon = ArkRcon(server)
             response = ark_rcon.broadcast(message)
+        except ConnectionRefusedError:
+            print('Connection refused.\n')
+            continue
         except EmptyResponse:
             print('Failed to execute RCON command.\n')
             continue
@@ -95,6 +103,9 @@ def save_world(args):
         try:
             ark_rcon = ArkRcon(server)
             response = ark_rcon.save_world()
+        except ConnectionRefusedError:
+            print('Connection refused.\n')
+            continue
         except EmptyResponse:
             print('Failed to execute RCON command.\n')
             continue
@@ -114,6 +125,9 @@ def kick_all_players(args):
         try:
             ark_rcon = ArkRcon(server)
             results = ark_rcon.kick_all_players()
+        except ConnectionRefusedError:
+            print('Connection refused.\n')
+            continue
         except EmptyResponse:
             print('Failed to execute RCON command.\n')
             continue
