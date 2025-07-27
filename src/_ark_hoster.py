@@ -6,6 +6,7 @@ import json
 from concurrent.futures import ThreadPoolExecutor
 
 import requests
+from rcon.exceptions import EmptyResponse
 
 from config import ArkHoster, ARK_HOSTER
 from src.ark_rcon import ArkRcon
@@ -143,15 +144,27 @@ def restart(args):
             message = M_RESTART.format(minutes=mins, seconds=secs)
 
             for ark_rcon in ark_rcons:
-                ark_rcon.broadcast(message)
+                try:
+                    print(f'Broadcasting on {ark_rcon.name}...')
+                    ark_rcon.broadcast(message)
+                except ConnectionRefusedError:
+                    print('Connection refused.\n')
+                except EmptyResponse:
+                    print('Failed to execute RCON command.\n')
 
         if seconds_left == 30:
             for ark_rcon in ark_rcons:
-                print(f'Saving world on {ark_rcon.name}...')
-                ark_rcon.save_world()
+                try:
+                    print(f'Saving world on {ark_rcon.name}...')
+                    ark_rcon.save_world()
 
-                print('Kicking all players...')
-                ark_rcon.kick_all_players()
+                    print(f'Kicking all players from {ark_rcon.name}...')
+                    ark_rcon.kick_all_players()
+                except ConnectionRefusedError:
+                    print(f'Connection refused by {ark_rcon.name}.\n')
+                except EmptyResponse:
+                    print(
+                        f'Failed to execute RCON command on {ark_rcon.name}.\n')
 
         countdown_msg = f"Restarting in {mins:02d}:{secs:02d}"
 
